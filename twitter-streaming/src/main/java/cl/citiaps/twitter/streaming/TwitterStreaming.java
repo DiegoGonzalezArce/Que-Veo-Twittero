@@ -85,25 +85,47 @@ public class TwitterStreaming {
 			public void onStatus(Status status) {
 
 				//Identificacion de mongoDB (Si se siguio el tutorial, estos deberian ser las identificaciones.)
+				
+				//char[] password = {'a','d','m','i','n','1','2','3'};
 				char[] password = {'r','o','o','t'};
-				System.out.println(status.getId());
-				System.out.println(status.getText());
-				//Idenfiticacion
-				MongoCredential credential = MongoCredential.createCredential("root", "admin", password);
-				MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(credential));
+				
+				if(status.getLang().equals("es")){
+					System.out.println("\n");
+					System.out.println("\n");
+					System.out.println(status.getId());
+					System.out.println(status.getText());
+					System.out.println(status.getUser().getName());
+					System.out.println(status.getRetweetCount());
+					System.out.println(status.getFavoriteCount());
+					System.out.println("\n");
+					System.out.println("\n");				
 
-				//Se crea la BD
-				MongoDatabase database = mongoClient.getDatabase("test");
-				//Crea la colleccion
-				MongoCollection<Document> coll = database.getCollection("myTestCollection");
-				database.createCollection("cappedCollection");
-				//Crea un documento
-				Document doc = new Document("tweet", status.getText());
-				//Lo inserta en la collecction MyTestCollection de la BD test.
-				coll.insertOne(doc);
+					//Idenfiticacion
+					//MongoCredential credential = MongoCredential.createCredential("admin", "admin", password);
+					MongoCredential credential = MongoCredential.createCredential("root", "admin", password);
+					MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(credential));
 
+					//Se crea la BD
+					MongoDatabase database = mongoClient.getDatabase("test");
+					//Crea la colleccion
+					MongoCollection<Document> coll = database.getCollection("myTestCollection");
+					//database.createCollection("cappedCollection");
+					//Crea un documento
+					Document doc = new Document("id", status.getId())
+										.append("tweet", status.getText())
+									    .append("username", status.getUser().getName())
+									    .append("RTcount", status.getRetweetCount())
+									    .append("LIKEcount", status.getFavoriteCount());
+					//Lo inserta en la colleccteion MyTestCollection de la BD test.
+					coll.insertOne(doc);
+					//Cierro el cliente:
+					mongoClient.close();
+				}
 			}
 		};
+				
+
+				
 
 		FilterQuery fq = new FilterQuery();
 
