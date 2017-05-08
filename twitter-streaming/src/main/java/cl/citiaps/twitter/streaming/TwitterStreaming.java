@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -90,6 +91,26 @@ public class TwitterStreaming {
 				char[] password = {'r','o','o','t'};
 				
 				if(status.getLang().equals("es")){
+                                    
+                                        //Obtencio de la fecha del tweet
+                                        Calendar cale = Calendar.getInstance();
+                                        String  anio = Integer.toString(cale.get(Calendar.YEAR));
+                                        String  mes = Integer.toString(cale.get(Calendar.MONTH));
+                                        String  dia = Integer.toString(cale.get(Calendar.DAY_OF_MONTH));
+                                        //Se guarda como solo un string.
+                                        String fecha = dia+"/"+mes+"/"+anio;  
+                                        
+                                        String  hora = Integer.toString(cale.get(Calendar.HOUR_OF_DAY));
+                                        int minutoI = cale.get(Calendar.MINUTE);
+                                        String minuto;
+                                        if (minutoI < 10){
+                                            minuto = "0" + Integer.toString(minutoI);
+                                        }
+                                        else{
+                                             minuto = Integer.toString(minutoI);
+                                        }
+                                   
+                            
 					System.out.println("\n");
 					System.out.println("\n");
 					System.out.println(status.getId());
@@ -97,6 +118,8 @@ public class TwitterStreaming {
 					System.out.println(status.getUser().getName());
 					System.out.println(status.getRetweetCount());
 					System.out.println(status.getFavoriteCount());
+                                        System.out.println("Fecha: "+dia+"/"+mes+"/"+anio);
+                                        System.out.println("Hora: "+hora+":"+minuto);
 					System.out.println("\n");
 					System.out.println("\n");				
 
@@ -114,8 +137,12 @@ public class TwitterStreaming {
 					Document doc = new Document("id", status.getId())
 										.append("tweet", status.getText())
 									    .append("username", status.getUser().getName())
-									    .append("RTcount", status.getRetweetCount())
+									    .append("day", dia)
+                                                                            .append("mouth", mes)
+                                                                            .append("hour",hora+":"+minuto)
+                                                                            .append("RTcount", status.getRetweetCount())    
 									    .append("LIKEcount", status.getFavoriteCount());
+                                                                            
 					//Lo inserta en la colleccteion MyTestCollection de la BD test.
 					coll.insertOne(doc);
 					//Cierro el cliente:
