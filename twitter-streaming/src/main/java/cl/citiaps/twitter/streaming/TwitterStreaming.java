@@ -18,29 +18,42 @@ import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.result.DeleteResult;
 import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.result.UpdateResult;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
+import java.lang.Long;
 
 import org.apache.commons.io.IOUtils;
 
 import twitter4j.FilterQuery;
+import twitter4j.IDs;
+import twitter4j.OEmbed;
+import twitter4j.OEmbedRequest;
+import twitter4j.ResponseList;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
 import twitter4j.StatusListener;
+import twitter4j.StatusUpdate;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
+import twitter4j.UploadedMedia;
 
-public class TwitterStreaming {
+
+
+public class TwitterStreaming{
 
 	private final TwitterStream twitterStream;
 	private Set<String> keywords;
-
+        
 	private TwitterStreaming() {
 		this.twitterStream = new TwitterStreamFactory().getInstance();
 		this.keywords = new HashSet<>();
@@ -55,6 +68,7 @@ public class TwitterStreaming {
 			e.printStackTrace();
 		}
 	}
+
 
 	private void init() {
 
@@ -92,7 +106,7 @@ public class TwitterStreaming {
 				
 				if(status.getLang().equals("es")){
                                     
-                                        //Obtencio de la fecha del tweet
+                                        //Obtencion de la fecha del tweet
                                         Calendar cale = Calendar.getInstance();
                                         String  anio = Integer.toString(cale.get(Calendar.YEAR));
                                         String  mes = Integer.toString(cale.get(Calendar.MONTH));
@@ -135,7 +149,7 @@ public class TwitterStreaming {
 					//database.createCollection("cappedCollection");
 					//Crea un documento
 					Document doc = new Document("id", status.getId())
-										.append("tweet", status.getText())
+									    .append("tweet", status.getText())
 									    .append("username", status.getUser().getName())
 									    .append("day", dia)
                                                                             .append("mouth", mes)
@@ -162,8 +176,13 @@ public class TwitterStreaming {
 		this.twitterStream.filter(fq);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws TwitterException {
 		new TwitterStreaming().init();
 	}
 
+        
+        
+
+            
+        
 }
