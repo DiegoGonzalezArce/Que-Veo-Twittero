@@ -1,0 +1,14 @@
+instrucciones para montar el ejemplo de lucene en netbeans.
+Hay dos formas para montarlo, la primera es importar el zip en lucene como proyecto y la segunda es a mano, explicare la segunda paso a paso:
+
+1- abrir netbeans
+2- crear un nuevo proyecto
+3- se abrira una pestaña, elegir el elemento que dice java project with existing sources, darle next
+4- ponerle nombre al proyecto,next
+5- agregar la carpeta src al proyecto,next
+6- en la siguiente pestaña darle a finish
+7- se habra cargado todos los recursos, pero tendran problemas en los archivos debido a que hay que cargar las librerias
+ir a las librerias en el costado izquierdo, hacer click izquierdo y seleccionar, add JAR
+8- se van a la carpeta de lucene y agregan lucene analyser commons que se encuentra en la carpeta analysers y luego commons, tambien agregar lucene core y el query parser, que se encuentran en esas respectivas carpetas
+9- agregar la libreria java ee api (yo agrego generalmente la 6)
+10- finalmente para probar el programa ejecutar el archivo tester.java, si les tira eeror probablemente hay problemas con las direcciones de los archivos y directorios, deben ir al .java service beans que esta con tester y modificar las rutas que estan en las primeras lineas de codigo
