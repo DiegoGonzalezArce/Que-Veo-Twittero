@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+       
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap-responsive.css">
+        <link rel="stylesheet" href="css/custom-styles.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/component.css">
+        <link rel="stylesheet" href="css/font-awesome-ie7.css">
+
+        <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        
+        <!-- aqui se encuentra la cabecera de la página --> 
+        <div class="header-wrapper">
+            <div class="container">
+                <div class="logo">
+                    <h1>¿Qué veo <br> Twittero?</h1> 
+                </div>
+            <div class="menu">          <!--Se declara el menu con sus cuatro componentes-->
+                <div class="navbar">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <i class="fw-icon-th-list"></i>
+                        </a>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav">
+                                <li><a href="#">Home</a></li>   <!--Home te lleva a la misma pagina-->
+                                <li><a href="#About">About</a></li><!--About te lleva  ala sección donde se explica la aplicación-->
+                                
+                                <li>
+                                    <div class="site-name">
+                                        <h3>¿Qué veo <br> Twittero?</h3>
+                                    </div>
+                                </li>
+                                <li><a href="#Services">Services</a></li> <!--Services te lleva a la seccion servicios dentro de la misma pagina-->
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div><!--/.nav-collapse -->
+                </div>
+            </div>
+            </div>
+        </div>
+        <!--Aquí está declarada la parte de las slides en movimiento que introducen que veo twittero-->
+        <div class="banner">
+            <div class="container">
+                    <div class="carousel slide" id="myCarousel">
+                                    <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            <div class="item">
+                                <div class="carousel-caption">
+                                    <h1>¿No sabes qué ver?</h1> <!--cabecera de la imagen-->
+                                    <div class="shadow"><img src="img/shadow.png" alt=""></div>
+                                </div>
+                                <img src="img/tweety.png" alt=""> <!--cada imagen se pone en esta sección-->
+                            </div>
+                            <div class="item">
+                                <div class="carousel-caption">
+                                    
+                                    <h1>¡Nuestros Tweeties te ayudarán!</h1> <!--Cabecera d ela imagen-->
+                                    <div class="shadow"><img src="img/shadow.png" alt=""></div>
+                                </div>
+                                <img src="img/banner-image.png" alt=""> <!--cada imagen se pone en esta sección-->
+                            </div>
+                            <div class="item active">
+                                <div class="carousel-caption">
+                                   
+                                    <h1>En qué veo twittero tendrás toda la información de los programas prime</h1> <!--Cabecera de la imagen-->
+                                    <div class="shadow"><img src="img/shadow.png" alt=""></div>
+                                </div>
+                                <img src="img/acerca.png" alt=""> <!--cada imagen se pone en esta sección-->
+                            </div>
+                        </div>
+                        <a data-slide="prev" href="#myCarousel" class="carousel-control left"><i class="fw-icon-chevron-left"></i></a>
+                        <a data-slide="next" href="#myCarousel" class="carousel-control right"><i class="fw-icon-chevron-right"></i></a>
+                    </div>
+                    </div>
+                </div>
+                <section id="Services">     <!--Se define la sección services1-->
+                <div class="featured-blocks">
+                    <div class="container">
+                        <div class="row-fluid">
+                            <div class="span4"> <!--Correpsonde al tamano del bloque de texto-->
+                                <div class="block">
+                                    <div class="icon">
+                                    <i class="fw-icon-user"></i>
+                                    </div>
+                                    <h1>Programas más vistos</h1>
+                                    <p>Revisa el Ranking de los programas más vistos en Chile</p>
+                                    <a href="ranking.html" role="button" class="btn">Ver más</a> <!--Boton que lleva a la vista ranking-->
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <div class="block">
+                                    <div class="icon">
+                                    <i class="fw-icon-flag"></i>
+                                    </div>
+                                    <h1>Historial por Programa</h1>
+                                    <p>Encuentra tu programa favorito y sus estadísticas</p>
+                                    <a href="#myModal" role="button" class="btn" data-toggle="modal">Ver más</a>
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <div class="block">
+                                    <div class="icon">
+                                    <i class="fw-icon-camera"></i>
+                                    </div>
+                                    <h1>Categorías más vistas</h1>
+                                    <p>Pincha aquí para saber qué categoría de programas es la preferida</p>
+                                    <a href="categoria.html" role="button" class="btn">Ver más</a>
+                                </div>
+                            </div>
+                        </div>
+                      <!--  </section> -->
+                        <div class="row-fluid">
+                            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      
+                               
+
+                                  
+                                  <h1>Elige el filtro para encontrar tu programa</h1>
+                                  <br>
+                                  <a href="#" class="btn btn-info" role="button">Categoría</a>
+
+                                  <a href="#" class="btn btn-info" role="button">Canal</a>
+
+                                  <a href="#" class="btn btn-info" role="button">ABC</a>
+                                <br><br>
+
+                                <form>
+                                   
+                                        <div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select" data-toggle="dropdown" href="#" id="btnCountry">Elige una ----- <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">United States</a></li>
+                                                <li><a href="#">Canada</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><span class="glyphicon glyphicon-star"></span> Other</a></li>
+                                            </ul>
+                                        </div>
+                                       
+                                        <div class="btn-group">
+                                            <button type="button" id="btnSearch" class="btn btn-primary">Search</button>
+                                        </div>
+                                        <div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select" data-toggle="dropdown" href="#" id="btnCountry">Selecciona un programa <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">United States</a></li>
+                                                <li><a href="#">Canada</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><span class="glyphicon glyphicon-star"></span> Other</a></li>
+                                            </ul>
+                                        </div>
+                                       
+                                        <div class="btn-group">
+                                            <button type="button" id="btnSearch" class="btn btn-primary">Search</button>
+                                        </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </section>
+                <section id="About"> <!--Se define la seccion de about-->
+                <div class="featured-heading">
+                    <div class="container">
+                        <ul class="grid effect-8" id="grid">
+                            <li><h1>Acerca de Nosotros</h1>
+                        </li>
+                        </ul>
+                        
+                        <div class="h-divider">
+                            <div class="icon1"><i class="fw-icon-star"></i></div>
+                        </div>
+                        <div class="row-fluid">
+                            <ul class="grid effect-3" id="grid">
+                                <li class="span6">
+                                    <div class="block">
+                            <img src="img/tweety2.png" alt="">
+                        </div>
+                                </li>
+                                <li class="span6">
+                                    <div class="block">
+                            <!--Texto descriptivo del about-->
+                                        <h1>¿Qué es qué veo Twittero?</h1>
+                                        <p>Nosotros nos encargamos de conseguir toda la información de los programas de la televisión abierta en horario prime a partir de las opiniones de un observatorio de twitter. Capturamos los tweets y analizamos los datos estadísticos, que nos ayudan a ver que programa es el que se está hablando más, que programa tiene más tweets con connotación positiva, negativa o neutral, también capturamos las estadísticas de cada programa a nivel histórico y más adelante queremos  ofrecer los tweets más relevantes basándonos en las cantidad de retweets y replies.</p>
+                                        
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+                </section>
+
+                <div class="footer-wrapper">  <!--declaracion del footer-->
+                    <div class="container">
+                        <div class="site-footer">
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <div class="block">
+                                        
+                                    </div>
+                                </div>
+                                <div class="span4">
+                                    <div class="block">
+                                         <img src="img/empresa.png" alt="">  <!--Bloque en el que va el logo-->
+                                    </div>
+                                </div>
+                                
+                                <div class="span4">
+                                    <div class="block">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="copy-rights">
+                            Copyright (c) websitename. All rights reserved. Designed by :  <strong><a href="http://www.alltemplateneeds.com">  www.alltemplateneeds.com</a></strong><br>Images From . <a href="http://www.photorack.net"> www.photorack.net </a>/<a href="http://www.wallcoo.net"> www.wallcoo.net</a>
+                        </div>
+                    </div>
+                </div>
+        
+
+        
+       <script src="js/jquery-1.9.1.js"></script> 
+<script src="js/bootstrap.js"></script>
+<script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/imagesloaded.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/AnimOnScroll.js"></script>
+     <script src="app.js"></script>
+    <script>
+      new AnimOnScroll( document.getElementById( 'grid' ), {
+        minDuration : 0.4,
+        maxDuration : 0.7,
+        viewportFactor : 0.2
+      } );
+    </script>
+<script>
+$('#myCarousel').carousel({
+    interval: 4000
+});
+</script>
+
+    </body>
+</html>
