@@ -101,8 +101,8 @@ public class TwitterStreaming{
 
 				//Identificacion de mongoDB (Si se siguio el tutorial, estos deberian ser las identificaciones.)
 				
-				//char[] password = {'a','d','m','i','n','1','2','3'};
-				char[] password = {'r','o','o','t'};
+                                char[] password = {'a','d','m','i','n','1','2','3'};
+				//char[] password = {'r','o','o','t'};
 				
 				if(status.getLang().equals("es")){
                                     
@@ -138,8 +138,8 @@ public class TwitterStreaming{
 					System.out.println("\n");				
 
 					//Idenfiticacion
-					//MongoCredential credential = MongoCredential.createCredential("admin", "admin", password);
-					MongoCredential credential = MongoCredential.createCredential("root", "admin", password);
+					MongoCredential credential = MongoCredential.createCredential("admin", "admin", password);
+					//MongoCredential credential = MongoCredential.createCredential("root", "admin", password);
 					MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(credential));
 
 					//Se crea la BD

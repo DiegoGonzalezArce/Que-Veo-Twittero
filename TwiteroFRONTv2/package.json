@@ -1,0 +1,22 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "Test de BD",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "node-sass --include-path scss",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "dev": "concurrently --kill-others 'npm run watch-css' 'autoreload-server ./ 8082'"
+  },
+  "homepage": "",
+  "devDependencies": {
+    "simple-autoreload-server": "^0.1.7"
+  },
+  "homepage": "",
+  "devDependencies": {
+    "concurrently": "^3.0.0",
+    "node-sass": "^3.10.0",
+    "nodemon": "^1.10.2",
+    "simple-autoreload-server": "^0.1.7"
+  }
+}

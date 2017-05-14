@@ -1,0 +1,96 @@
+
+            <div class="featured-heading">
+                    <div class="container">
+                        <ul class="grid effect-8" id="grid">
+                            <br>
+                            <li><h1>Ranking de programas</h1>
+                        </li>
+                        </ul>
+                        
+                        <div class="h-divider">
+                            <div class="icon1"><i class="fw-icon-star"></i></div>
+                        </div>
+                        <div class="row-fluid">
+                            <ul class="grid effect-3" id="grid">
+                                <li class="span6">
+                                    <div class="block">
+                            <table class="table table-hover">
+              
+                                <thead>
+                                  <tr>
+                                    <th>Lugar</th>
+                                    <th>Programa</th>
+                                    <th>Canal</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat= "x in programas">
+                                 
+                                    <td>1</td>
+                                     <td><li><a href="#">{{x.nombre}}</a></li></td>  
+                                      <td><li><a href="#">{{x.canalId}}</a></li></td> 
+                                  </tr>
+
+                                </tbody>
+                              </table>
+
+                            <!--Debería ser en angular algo menos así 
+                            <div ng-app="myApp" ng-controller="customersCtrl"> <!--Esta sería la función de la que voy a sacar los datos y el controlador correpsondiente-->
+                                      <!--      <table class="table table-hover">
+                                        
+                                                <thead>
+                                                  <tr> se definen las cabeceras
+                                                    <th>Lugar</th>
+                                                    <th>Programa</th>
+                                                    <th>Canal</th>
+                                                      
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr ng-repeat= "x en programa">
+                                                   
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <li><a href=<td>{{ x.Nombre }}</td> 
+                                                    <td>{{ x.Canal }}</td>
+                                                  </tr>
+                                                </tbody>
+                                            </table>-->
+                                            <!--Se escriben las variables de el objeto programas que tiene como atributos Nombre y Canal-->
+                                                    <!--(function (){ algo asi debería ir en el js
+                                                            var app = angular.module('myApp', []);
+                                                            app.controller('customerCrtl', function(){
+                                                            this.product = programas;
+
+                                                            });
+                                                            var programa = {
+                                                                Nombre: 'masterchef',
+                                                                Canal: 'trece',
+                                                                description:'lalala',
+                                                            }
+
+
+                                                        })();
+                                                        -->
+
+
+                        <!--    <h1>ipsum dolor sit amet</h1>
+                            <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse auctor urna id justo adipiscing, vel egestas sem scelerisque. Sed sed nulla dignissim magna ultricies scelerisque. Duis suscipit tellus nisi, gravida hendrerit nisi feugiat vitae faliclisis metus placerat enim.</p>
+                            <a href="#" class="btn">More</a>-->
+                        </div>
+                                </li>
+                                <li class="span6">
+                                    <div class="block">
+                         <!--   <img src="img/img1.png" alt="">-->
+                            <img src="img/graficoprogramas.jpg" alt="">
+                        </div>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+       
+
+
+
+

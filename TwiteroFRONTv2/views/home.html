@@ -1,0 +1,95 @@
+
+            <!--Aquí está declarada la parte de las slides en movimiento que introducen que veo twittero-->
+           <div class="banner">
+               <div class="container">
+                       <div class="carousel slide" id="myCarousel">
+                                       <!-- Carousel items -->
+                           <div class="carousel-inner">
+                               <div class="item">
+                                   <div class="carousel-caption">
+                                       <h1>¿No sabes qué ver?</h1> <!--cabecera de la imagen-->
+                                       <div class="shadow"><img src="img/shadow.png" alt=""></div>
+                                   </div>
+                                   <img src="img/tweety.png" alt=""> <!--cada imagen se pone en esta sección-->
+                               </div>
+                               <div class="item">
+                                   <div class="carousel-caption">
+                                       
+                                       <h1>¡Nuestros Tweeties te ayudarán!</h1> <!--Cabecera d ela imagen-->
+                                       <div class="shadow"><img src="img/shadow.png" alt=""></div>
+                                   </div>
+                                   <img src="img/banner-image.png" alt=""> <!--cada imagen se pone en esta sección-->
+                               </div>
+                               <div class="item active">
+                                   <div class="carousel-caption">
+                                      
+                                       <h1>En qué veo twittero tendrás toda la información de los programas prime</h1> <!--Cabecera de la imagen-->
+                                       <div class="shadow"><img src="img/shadow.png" alt=""></div>
+                                   </div>
+                                   <img src="img/acerca.png" alt=""> <!--cada imagen se pone en esta sección-->
+                               </div>
+                           </div>
+                           <a data-slide="prev" href="#myCarousel" class="carousel-control left"><i class="fw-icon-chevron-left"></i></a>
+                           <a data-slide="next" href="#myCarousel" class="carousel-control right"><i class="fw-icon-chevron-right"></i></a>
+                       </div>
+                       </div>
+                   </div>
+                   <section id="Services">     <!--Se define la sección services1-->
+                   <div class="featured-blocks">
+                       <div class="container">
+                           <div class="row-fluid">
+                               <div class="span4"> <!--Correpsonde al tamano del bloque de texto-->
+                                   <div class="block">
+                                       <div class="icon">
+                                       <i class="fw-icon-user"></i>
+                                       </div>
+                                       <h1>Programas más vistos</h1>
+                                       <p>Revisa el Ranking de los programas más vistos en Chile</p>
+                                       <a href="#/ranking/" role="button" class="btn">Ver más</a> <!--Boton que lleva a la vista ranking-->
+                                   </div>
+                               </div>
+                               <div class="span4">
+                                   <div class="block">
+                                       <div class="icon">
+                                       <i class="fw-icon-flag"></i>
+                                       </div>
+                                       <h1>Historial por Programa</h1>
+                                       <p>Encuentra tu programa favorito y sus estadísticas</p>
+                                       <a href="#myModal" role="button" class="btn" data-toggle="modal">Ver más</a>
+                                   </div>
+                               </div>
+                               <div class="span4">
+                                   <div class="block">
+                                       <div class="icon">
+                                       <i class="fw-icon-camera"></i>
+                                       </div>
+                                       <h1>Categorías más vistas</h1>
+                                       <p>Pincha aquí para saber qué categoría de programas es la preferida</p>
+                                       <a href="#/categorias" role="button" class="btn" data-toggle="modal">Ver más</a>
+                                   </div>
+                               </div>
+                           </div>
+                           </section>
+                           <div class="row-fluid">
+                               <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                         <h2>Pellen tesque lacinia</h2>
+                         <p> .</p>
+                         <p>Phasellus adipiscing porttitor metus, eget commodo mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut hendrerit ante. Phasellus viverra ligula tortor, ut sodales elit tempus eu. Vestibulum mattis sed purus at laoreet. Proin mattis, ante vel adipiscing porttitor, orci elit venenatis nibh, at molestie tortor dolor sit amet urna.  .</p>
+                       </div>
+                           </div>
+                       </div>
+                   </div>
+
+
+    <script>
+      new AnimOnScroll( document.getElementById( 'grid' ), {
+        minDuration : 0.4,
+        maxDuration : 0.7,
+        viewportFactor : 0.2
+      } );
+    </script>
+<script>
+$('#myCarousel').carousel({
+    interval: 4000
+});
+</script>
