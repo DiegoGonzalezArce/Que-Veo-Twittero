@@ -14,6 +14,18 @@ angular.module('mainModule')
 			});
 		}
 		getProgramas();
-		console.log($scope.programas);
+		function getCanales(){
+			programsService.getCanales()
+			.success(function(data){
+				$scope.canales = data;
+			})
+			.error(function(error){
+				$scope.message = "FAIL";
+
+			});
+		}
+
+		getCanales();
+		console.log($scope);
 
 	});

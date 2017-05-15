@@ -20,7 +20,10 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: 'views/categoria.html',
 		controller: 'categoriasCtrl'
 	})
-
+	.when('/programa/:programaId', {
+		templateUrl: 'views/Programas.html',
+		controller: 'programaCtrl'
+	})
 	.otherwise({
 		redirectTo: '/home'
 	});

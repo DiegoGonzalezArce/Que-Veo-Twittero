@@ -25,21 +25,13 @@
                                 </thead>
                                 <tbody>
                                   <tr>
+                                    <tr ng-repeat= "x in categorias">
                                  
-                                    <td><h1>1</h1></td>
-                                     <td><h1><li><a href="#">Realities</a></li></h1></td>  
-                                      
+                                    <td>{{$index+1}}</td>
+                                     <td><li><a href="#">{{x.nombre}}</a></li></td>  
+                                      <td><li><a href="#">{{x.descripcion}}</a></li></td> 
                                   </tr>
-                                  <tr>
-                                    <td><h1>2</h1></td>
-                                     <td><h1><li><a href="#">Teleseries</a></li></td>  
-                                      
-                                  </tr>
-                                  <tr>
-                                    <td><h1>3</h1></td>
-                                     <td><h1><li><a href="#">Cocina</a></li></h1></td>
-                                      
-                                  </tr>
+                              
                                 </tbody>
                               </table>
 

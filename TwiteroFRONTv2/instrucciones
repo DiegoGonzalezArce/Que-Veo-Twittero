@@ -1,8 +1,6 @@
 Para que funcione, hay que tener hecho:
-	1.- Conectada la BD sql-db v4 en mysql
+	1.- Conectada la BD sql-db en mysql
 	2.- Realizar la connection pull y resources desde glassfish
-		2.1.- la connection pull se llama QTV
-		2.2.- el resources se llama jbdc/QTV
 	3.- Tener el dominio abierto del QVTweetero (default :8080) (JAVAEE) -> asadmin start-domain
 	4.- Instalar node en la carpeta TwitteroFRONTv2  -> npm install
 	5.- Correr el servidor de npm (default :8082) -> npm run dev

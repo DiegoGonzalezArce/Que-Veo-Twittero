@@ -26,9 +26,9 @@
                                 <tbody>
                                   <tr ng-repeat= "x in programas">
                                  
-                                    <td>1</td>
-                                     <td><li><a href="#">{{x.nombre}}</a></li></td>  
-                                      <td><li><a href="#">{{x.canalId}}</a></li></td> 
+                                    <td>{{$index + 1}}</td>
+                                     <td><li><a href="#/programa/{{x.programaId}}">{{x.nombre}}</a></li></td>  
+                                      <td><li><a href="#/about">{{x.canalId}}</a></li></td> 
                                   </tr>
 
                                 </tbody>
