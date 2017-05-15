@@ -28,7 +28,6 @@ import model.Canal;
 
 
 import facade.ProgramaFacade;
-import model.Programa;
 
 
 @Path("/canales")

@@ -41,7 +41,7 @@ public class Programa implements Serializable {
 	@Column(name="nombre", nullable=false, length=45)
 	private String nombre;
 
-	@Column(name="descripcion", nullable=true)
+	@Column(name="descripcion", nullable=false, length =4000)
 	private String descripcion;
 
 	@Column(name="inicio", nullable=false)
@@ -81,7 +81,7 @@ public class Programa implements Serializable {
 		return this.descripcion;
 	}
 
-	public void setLastName(String descripcion) {
+	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
