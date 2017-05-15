@@ -28,11 +28,11 @@ public class LuceneServiceBean {
     private UIForm form;
     private UIForm tableForm;
     private UICommand addCommand;
-    final static String dirPostsIndex = "src\\index";
+    final static String dirPostsIndex = "src/index";
     private String content = "";
     private List<String> searchResults = null;
     private boolean initial = true;
-    final static String ARCHIVO_OUT = "src\\exp.out";
+    final static String ARCHIVO_OUT = "src/exp.out";
     
     public boolean updateIndex() {
 		TweetParser tweetParser = new TweetParser();
