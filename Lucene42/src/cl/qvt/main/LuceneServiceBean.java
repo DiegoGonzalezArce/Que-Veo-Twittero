@@ -50,5 +50,7 @@ public class LuceneServiceBean {
 		
 		
 		return done;
-	}
+    }
+    
+    
 }
