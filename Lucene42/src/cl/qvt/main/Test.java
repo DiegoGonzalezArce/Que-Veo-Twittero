@@ -36,7 +36,7 @@ public class Test{
             TweetSearcher ts = new TweetSearcher();
             Directory index = FSDirectory.open(new File("src/index"));
             IndexReader reader = DirectoryReader.open(index);
-            List<Integer> a=ts.searchIds(reader, "master", "tweet", 5000);
+            List<Integer> a=ts.searchDocIds(reader, "master", "tweet", 5000);
             IndexSearcher searcher = new IndexSearcher(reader);
             int i=0;
             for (Iterator iter = a.iterator(); iter.hasNext();) {
@@ -44,6 +44,12 @@ public class Test{
                 Document d = searcher.doc(docId);
                 System.out.println((i + 1) + ". Id:"+d.get("id") +"\t user:"+ d.get("username") + "\t tweet:" + d.get("tweet"));
                 i++;
-        }}
+            }
+            List<String> b=ts.searchTweetIds(reader, "master", "tweet", 5000);
+            for (Iterator iter = b.iterator(); iter.hasNext();) {
+                System.out.println("Id:"+(String) iter.next());
+            }
+            
+        }
 }
 
