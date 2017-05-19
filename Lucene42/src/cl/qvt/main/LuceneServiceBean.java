@@ -3,11 +3,13 @@ package cl.qvt.main;
 
 import cl.qvt.parser.TweetParser;
 import cl.qvt.indexer.TweetIndexer;
+import cl.qvt.nlp.NLPTools;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIForm;
+import org.apache.lucene.document.Document;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,6 +35,7 @@ public class LuceneServiceBean {
     private List<String> searchResults = null;
     private boolean initial = true;
     final static String ARCHIVO_OUT = "src/exp.out";
+    final static String ARCHIVO_CSV = "src/SpanishLexicon.csv";
     
     public boolean updateIndex() {
 		TweetParser tweetParser = new TweetParser();
@@ -51,6 +54,15 @@ public class LuceneServiceBean {
 		
 		return done;
     }
-    
+    public void addTweetScore(Document doc) throws IOException{
+        NLPTools tool=new NLPTools();
+        List<String> lexicon=tool.getContent(ARCHIVO_CSV);
+        String content=doc.get("tweet");
+        int score=tool.cumulativeScore(content, lexicon);
+        //conectar con la bd
+        //agregar score al tweet
+        System.out.println("el tweet:"+content+"\t posee el siguiente puntaje:"+score);
+        
+    }
     
 }

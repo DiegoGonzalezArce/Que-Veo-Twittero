@@ -1,6 +1,7 @@
 package cl.qvt.parser;
 
 
+import cl.qvt.nlp.NLPTools;
 import cl.qvt.structure.Tweet;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -33,7 +34,8 @@ public class TweetParser {
     public Vector parsearArchivoOut(String archivoDat) {
 		try {			
 			Vector vectorPosts = new Vector();
-			List<String> list = getContent(archivoDat);
+                        NLPTools tool=new NLPTools();
+			List<String> list = tool.getContent(archivoDat);
 			for (Iterator iter = list.iterator(); iter.hasNext();) {
 				String elem = (String) iter.next();
                                 Pattern p = Pattern.compile("\\{\"_id\":\\{\"\\$oid\":\"(.*)\"\\},\"id\":\\{\"\\$numberLong\":\"(.*)\"\\},\"tweet\":\"(.*)\",\"username\":\"(.*)\",\"day\":\"(.*)\",\"mouth\":\"(.*)\",\"hour\":\"(.*)\",\"RTcount\":([0-9]*),\"LIKEcount\":([0-9]*)\\}");
@@ -56,24 +58,5 @@ public class TweetParser {
 			System.out.println("ERROR2: " + es.getMessage());
 		}
 		return null;
-    }
-    public List<String> getContent(String filePath)
-			throws FileNotFoundException {
-		List<String> records = new ArrayList<String>();
-		BufferedReader br = new BufferedReader(new FileReader(filePath));
-		try {
-
-			String line = br.readLine();
-			while (line != null) {
-				records.add(line);
-				line = br.readLine();
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-                        System.out.println("ERROR1: " + e.getMessage());
-		}
-
-		return records;
-	}
+    } 
 }

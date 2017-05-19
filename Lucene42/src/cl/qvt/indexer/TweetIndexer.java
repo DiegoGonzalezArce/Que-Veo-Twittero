@@ -74,6 +74,7 @@ public class TweetIndexer{
 			docRetrievedTweet.add(new StringField("hour", retrievedTweet.hour , Field.Store.YES));
 			docRetrievedTweet.add(new StringField("RTcount", retrievedTweet.RTcount , Field.Store.YES));
 			docRetrievedTweet.add(new StringField("LIKEcount", retrievedTweet.LIKEcount , Field.Store.YES));
+			docRetrievedTweet.add(new StringField("LIKEcount", retrievedTweet.LIKEcount , Field.Store.YES));
 			
 			/* docRetrievedTweet.add(new StringField("comments", retrievedTweet.comments, Field.Store.YES));
 			 * Si el campo comments se incluye al documento como StringField, no hallar� coincidencias en la busqueda.
