@@ -12,12 +12,11 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 
 @Entity
 @Table(name="Categoria")
-@NamedQuery(name="Categoria.findAll", query="SELECT f FROM Canal f")
+@NamedQuery(name="Categoria.findAll", query="SELECT f FROM Categoria f")
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -38,7 +38,9 @@ import model.Categoria;
 
 
 import facade.ProgramaFacade;
+import facade.Programa_CategoriaFacade;
 import model.Programa;
+import model.Programa_Categoria;
 
 
 @Path("/categorias")
@@ -51,6 +53,9 @@ public class CategoriaService {
 	
 	@EJB 
 	ProgramaFacade programaFacadeEJB;
+        
+        @EJB
+        Programa_CategoriaFacade programacategoriaFacadeEJB;
 	
 	Logger logger = Logger.getLogger(CanalService.class.getName());
 	
@@ -68,7 +73,29 @@ public class CategoriaService {
     }
 
     
-
+    //Entrega los programas de la categoria {id}.
+    @GET
+    @Path("{id}/programas")
+    @Produces({"application/xml", "application/json"})
+    public List<Programa> ProgramaPerCategoria(@PathParam("id") Integer id){
+        List<Programa_Categoria> x = programacategoriaFacadeEJB.findAll();  
+        List<Programa> y = programaFacadeEJB.findAll();
+        List<Programa> z = new ArrayList<>();
+        
+        for(Programa_Categoria elem : x){
+            if(elem.getCategoriaId() == id){
+                int a = elem.getProgramaId();
+                for(Programa p : y){
+                    if(p.getProgramaId() == a){
+                        z.add(p);
+                    }
+                }
+            }
+        }
+        return z;
+        
+    }
+    
 	@POST
     @Consumes({"application/xml", "application/json"})
     public void create(Categoria entity) {
