@@ -39,7 +39,7 @@ public class Test{
             LuceneServiceBean sr = new LuceneServiceBean();
             sr.updateIndex();
             TweetSearcher ts = new TweetSearcher();
-            Directory index = FSDirectory.open(new File("src/main/java/Lucene42/src/index"));
+            Directory index = FSDirectory.open(new File("QVT/Index"));
             IndexReader reader = DirectoryReader.open(index);
             //String input= "master";
             List<String> input=new ArrayList<String>();

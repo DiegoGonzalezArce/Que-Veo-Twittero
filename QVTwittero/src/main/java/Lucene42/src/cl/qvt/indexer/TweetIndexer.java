@@ -52,7 +52,6 @@ public class TweetIndexer{
 		Map<String,Analyzer> analyzerPerField = new HashMap<String,Analyzer>();
 		analyzerPerField.put("tweet", new EnglishAnalyzer(Version.LUCENE_42));	
 		PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new EnglishAnalyzer(Version.LUCENE_42), analyzerPerField);			
-		deleteIndex(directorio);
 	        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_42, analyzer);
 		indexWriter = new IndexWriter(FSDirectory.open(indexDir), config);
 	}
@@ -91,26 +90,6 @@ public class TweetIndexer{
         public void closeIndex() throws IOException{
 			//indexWriter.optimize();//deprecated
 			indexWriter.close();	
-		}
-        public void deleteIndex(String dirdelete){
-			File directory = new File(dirdelete);		
-			File[] files = directory.listFiles();
-                        for (File file : files)
-			{
-				if(file.isFile()){
-			   // Delete each file
-
-			   if (!file.delete())
-			   {
-			       // Failed to delete file
-
-			       System.out.println("Failed to delete "+file);
-			   }
-				}
-			}
-
-			
-			
 		}
 }
 

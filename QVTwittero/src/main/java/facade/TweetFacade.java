@@ -7,6 +7,7 @@ package facade;
 
 import java.util.List;
 import javax.ejb.Local;
+import model.Programa;
 import model.Tweet;
 
 /**

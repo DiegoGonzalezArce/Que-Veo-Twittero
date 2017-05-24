@@ -41,10 +41,15 @@ import org.apache.lucene.store.FSDirectory;
 public class TestLuceneService {
     //localhost:8080/QVTwittero/TestLucene/test
     @GET
+    @Path("/test2")
+    public String juan2() throws IOException, ParseException{
+        LuceneServiceBean sr = new LuceneServiceBean();
+        sr.updateIndex();
+        return "logrado";
+    }
+    @GET
     @Path("/test")
     public String juan() throws IOException, ParseException{
-        LuceneServiceBean sr = new LuceneServiceBean();
-        //sr.updateIndex();
         TweetSearcher ts = new TweetSearcher();
         Directory index = FSDirectory.open(new File("QVT/Index"));
         IndexReader reader = DirectoryReader.open(index);

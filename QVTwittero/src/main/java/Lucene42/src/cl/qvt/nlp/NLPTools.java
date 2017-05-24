@@ -6,6 +6,7 @@
 package Lucene42.src.cl.qvt.nlp;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -66,6 +67,22 @@ public class NLPTools {
 		}
                 br.close();
 		return records;
-	}
+    }
+    public void deleteDir(String dirdelete){
+			File directory = new File(dirdelete);		
+			File[] files = directory.listFiles();
+                        for (File file : files)
+			{
+				if(file.isFile()){
+			   // Delete each file
 
+			   if (!file.delete())
+			   {
+			       // Failed to delete file
+
+			       System.out.println("Failed to delete "+file);
+			   }
+				}
+			}	
+	}
 }

@@ -41,8 +41,11 @@ public class LuceneServiceBean {
 		TweetParser tweetParser = new TweetParser();
 		boolean done=false;
 		try {
-			TweetIndexer tweetIndex = new TweetIndexer(dirPostsIndex);
-			Vector tweetsOut = tweetParser.parsearArchivoOut(ARCHIVO_OUT);					
+                        NLPTools tool=new NLPTools();
+                        tool.deleteDir(dirPostsIndex);
+                        Vector tweetsOut = tweetParser.parsearArchivoOut(ARCHIVO_OUT);
+			System.out.println(tweetsOut);
+                        TweetIndexer tweetIndex = new TweetIndexer(dirPostsIndex);			
 			tweetIndex.fillIndexTweets(tweetsOut);
 			tweetIndex.closeIndex();
 			done=true;

@@ -38,21 +38,25 @@ public class TweetParser {
 			List<String> list = tool.getContent(archivoDat);
 			for (Iterator iter = list.iterator(); iter.hasNext();) {
 				String elem = (String) iter.next();
-                                Pattern p = Pattern.compile("\\{\"_id\":\\{\"\\$oid\":\"(.*)\"\\},\"id\":\\{\"\\$numberLong\":\"(.*)\"\\},\"tweet\":\"(.*)\",\"username\":\"(.*)\",\"day\":\"(.*)\",\"mouth\":\"(.*)\",\"anio\":\"(.*)\",\"hour\":\"(.*)\",\"RTcount\":([0-9]*),\"LIKEcount\":([0-9]*)\\}");
+                                System.out.println(elem);
+                                String str="\\{\"_id\":\\{\"\\$oid\":\"(.*)\"\\},\"id\":\\{\"\\$numberLong\":\"(.*)\"\\},\"tweet\":\"(.*)\",\"username\":\"(.*)\",\"day\":\"(.*)\",\"month\":\"(.*)\",\"anio\":\"(.*)\",\"hour\":\"(.*)\",\"RTcount\":([0-9]*),\"LIKEcount\":([0-9]*)\\}";
+                                Pattern p = Pattern.compile(str);
                                 Matcher m = p.matcher(elem);
-                                m.find();
-				String _id = m.group(1).toString();
-				String id = m.group(2).toString();
-				String tweet = m.group(3).toString();
-				String username = m.group(4).toString();
-				String day = m.group(5).toString();
-				String mouth = m.group(6).toString();
-                                String anio = m.group(7).toString();
-				String hour = m.group(8).toString();
-				String RTcount = m.group(9).toString();
-				String LIKEcount = m.group(10).toString();
-				Tweets tweets = new Tweets(_id,id,tweet,username,day,mouth,anio,hour,RTcount,LIKEcount); 
-				vectorPosts.add(tweets);
+                                if(m.find()){
+                                    System.out.println(elem);
+                                    String _id = m.group(1).toString();
+                                    String id = m.group(2).toString();
+                                    String tweet = m.group(3).toString();
+                                    String username = m.group(4).toString();
+                                    String day = m.group(5).toString();
+                                    String mouth = m.group(6).toString();
+                                    String anio = m.group(7).toString();
+                                    String hour = m.group(8).toString();
+                                    String RTcount = m.group(9).toString();
+                                    String LIKEcount = m.group(10).toString();
+                                    Tweets tweets = new Tweets(_id,id,tweet,username,day,mouth,anio,hour,RTcount,LIKEcount); 
+                                    vectorPosts.add(tweets);
+                                }
 			}
 			return vectorPosts;
 		} catch (Exception es) {
