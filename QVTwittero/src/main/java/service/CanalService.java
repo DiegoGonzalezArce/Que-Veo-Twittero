@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nikonegima
@@ -12,7 +11,6 @@ package service;
 
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.ArrayList;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -26,39 +24,33 @@ import javax.ws.rs.Produces;
 import facade.CanalFacade;
 import model.Canal;
 
-
 import facade.ProgramaFacade;
-
 
 @Path("/canales")
 public class CanalService {
-	
 
-	@EJB 
-	CanalFacade canalFacadeEJB;
+    @EJB
+    CanalFacade canalFacadeEJB;
 
-	
-	@EJB 
-	ProgramaFacade programaFacadeEJB;
-	
-	Logger logger = Logger.getLogger(CanalService.class.getName());
-	
-	@GET
-	@Produces({"application/xml", "application/json"})
-	public List<Canal> findAll(){
-		return canalFacadeEJB.findAll();
-	}
-	
-	@GET
+    @EJB
+    ProgramaFacade programaFacadeEJB;
+
+    Logger logger = Logger.getLogger(CanalService.class.getName());
+
+    @GET
+    @Produces({"application/xml", "application/json"})
+    public List<Canal> findAll() {
+        return canalFacadeEJB.findAll();
+    }
+
+    @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Canal find(@PathParam("id") Integer id) {
         return canalFacadeEJB.find(id);
     }
 
-    
-
-	@POST
+    @POST
     @Consumes({"application/xml", "application/json"})
     public void create(Canal entity) {
         canalFacadeEJB.create(entity);
@@ -68,9 +60,7 @@ public class CanalService {
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Canal entity) {
-    	entity.setCanalId(id.intValue());
+        entity.setCanalId(id.intValue());
         canalFacadeEJB.edit(entity);
     }
-	
-
 }

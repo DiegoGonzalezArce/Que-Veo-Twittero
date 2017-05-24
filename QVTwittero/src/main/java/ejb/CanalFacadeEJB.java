@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nikonegima
@@ -21,18 +20,17 @@ import model.Canal;
 //EJB de la Tabla Canals
 @Stateless
 public class CanalFacadeEJB extends AbstractFacade<Canal> implements CanalFacade {
-	
-	
-	@PersistenceContext(unitName = "qvtPU")
-	private EntityManager em;
-	
-	public CanalFacadeEJB() {
-		super(Canal.class);
-	}
 
-	@Override
-	protected EntityManager getEntityManager() {
-		return this.em;
-	}
+    @PersistenceContext(unitName = "qvtPU")
+    private EntityManager em;
+
+    public CanalFacadeEJB() {
+        super(Canal.class);
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return this.em;
+    }
 
 }

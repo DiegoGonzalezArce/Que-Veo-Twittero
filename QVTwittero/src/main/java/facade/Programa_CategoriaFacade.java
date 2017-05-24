@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nikonegima
@@ -19,18 +18,17 @@ import model.Programa_Categoria;
 @Local
 public interface Programa_CategoriaFacade {
 
-	public void create(Programa_Categoria entity);
+    public void create(Programa_Categoria entity);
 
-	public void edit(Programa_Categoria entity);
+    public void edit(Programa_Categoria entity);
 
-	public void remove(Programa_Categoria entity);
+    public void remove(Programa_Categoria entity);
 
-	public Programa_Categoria find(Object id);
+    public Programa_Categoria find(Object id);
 
-	public List<Programa_Categoria> findAll();
+    public List<Programa_Categoria> findAll();
 
-	public List<Programa_Categoria> findRange(int[] range);
+    public List<Programa_Categoria> findRange(int[] range);
 
-	public int count();
-
+    public int count();
 }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nikonegima
@@ -27,36 +26,66 @@ import facade.ProgramaFacade;
 import model.Programa;
 
 import facade.CanalFacade;
+import model.Canal;
+
+import facade.KeywordFacade;
+import model.Keyword;
+
+import facade.Programa_KeywordFacade;
+import model.Programa_Keyword;
 
 @Path("/programas")
 public class ProgramaService {
-	
-	
-	@EJB 
-	ProgramaFacade programaFacadeEJB;
-	
-	@EJB 
-	CanalFacade canalFacadeEJB;
 
-	Logger logger = Logger.getLogger(ProgramaService.class.getName());
-	
-	@GET
-	@Produces({"application/xml", "application/json"})
-	public List<Programa> findAll(){
-		return programaFacadeEJB.findAll();
-	}
+    @EJB
+    ProgramaFacade programaFacadeEJB;
 
-	
-	@GET
+    @EJB
+    CanalFacade canalFacadeEJB;
+
+    @EJB
+    KeywordFacade keywordFacadeEJB;
+
+    @EJB
+    Programa_KeywordFacade programaKeywordFacadeEJB;
+
+    Logger logger = Logger.getLogger(ProgramaService.class.getName());
+
+    @GET
+    @Produces({"application/xml", "application/json"})
+    public List<Programa> findAll() {
+        return programaFacadeEJB.findAll();
+    }
+
+    @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Programa find(@PathParam("id") Integer id) {
         return programaFacadeEJB.find(id);
     }
 
-    
+    @GET
+    @Path("{id}/keywords")
+    @Produces({"application/xml", "application/json"})
+    public List<Keyword> KeywordPorPrograma(@PathParam("id") Integer id) {
+    	List<Programa_Keyword> x = programaKeywordFacadeEJB.findAll();
+    	List<Keyword> y = keywordFacadeEJB.findAll();
+    	List<Keyword> z = new ArrayList<>();
 
-	@POST
+    	for (Programa_Keyword elem : x) {
+    		if (elem.getProgramaId() == id) {
+    			int a = elem.getKeywordId();
+    			for (Keyword k : y) {
+    				if (k.getKeywordId() == a) {
+    					z.add(k);
+    				}
+    			}
+    		}
+    	}
+        return z;
+    }
+
+    @POST
     @Consumes({"application/xml", "application/json"})
     public void create(Programa entity) {
         programaFacadeEJB.create(entity);
@@ -66,10 +95,7 @@ public class ProgramaService {
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Programa entity) {
-    	entity.setProgramaId(id.intValue());
+        entity.setProgramaId(id.intValue());
         programaFacadeEJB.edit(entity);
     }
-	
-
 }
-

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nikonegima
@@ -20,19 +19,17 @@ import model.Programa_Categoria;
 
 @Stateless
 public class Programa_CategoriaFacadeEJB extends AbstractFacade<Programa_Categoria> implements Programa_CategoriaFacade {
-	
-	
-	@PersistenceContext(unitName = "qvtPU")
-	private EntityManager em;
-	
-	public Programa_CategoriaFacadeEJB() {
-		super(Programa_Categoria.class);
-	}
 
-	@Override
-	protected EntityManager getEntityManager() {
-		return this.em;
-	}
+    @PersistenceContext(unitName = "qvtPU")
+    private EntityManager em;
+
+    public Programa_CategoriaFacadeEJB() {
+        super(Programa_Categoria.class);
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return this.em;
+    }
 
 }
-

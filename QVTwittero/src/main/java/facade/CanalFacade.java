@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nikonegima
@@ -20,19 +19,18 @@ import model.Canal;
 @Local
 public interface CanalFacade {
 
-	public void create(Canal entity);
+    public void create(Canal entity);
 
-	public void edit(Canal entity);
+    public void edit(Canal entity);
 
-	public void remove(Canal entity);
+    public void remove(Canal entity);
 
-	public Canal find(Object id);
+    public Canal find(Object id);
 
-	public List<Canal> findAll();
+    public List<Canal> findAll();
 
-	public List<Canal> findRange(int[] range);
+    public List<Canal> findRange(int[] range);
 
-	public int count();
-
+    public int count();
 }
 

@@ -7,5 +7,8 @@
 		<class>model.Canal</class>
 		<class>model.Programa</class>
                 <class>model.Categoria</class>
+		<class>model.Keyword</class>
+		<class>model.Programa_Categoria</class>
+		<class>model.Programa_Keyword</class>
 	</persistence-unit>
 </persistence>
