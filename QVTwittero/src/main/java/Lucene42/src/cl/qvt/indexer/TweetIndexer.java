@@ -11,7 +11,7 @@ package Lucene42.src.cl.qvt.indexer;
  * @author diego
  */
 
-import Lucene42.src.cl.qvt.structure.Tweet;
+import Lucene42.src.cl.qvt.structure.Tweets;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -58,11 +58,11 @@ public class TweetIndexer{
 	}
         public void fillIndexTweets(Vector tweets) throws IOException{
             for(Iterator iter = tweets.iterator(); iter.hasNext();){
-	        Tweet retrievedTweet = (Tweet) iter.next();
+	        Tweets retrievedTweet = (Tweets) iter.next();
                 addDocumentRetrievedTweet(retrievedTweet);
 	    }
         }
-        private void addDocumentRetrievedTweet(Tweet retrievedTweet) throws CorruptIndexException, IOException {
+        private void addDocumentRetrievedTweet(Tweets retrievedTweet) throws CorruptIndexException, IOException {
 			
 			Document docRetrievedTweet  = new Document();
 			docRetrievedTweet.add(new StringField("_id", retrievedTweet._id, Field.Store.YES));			

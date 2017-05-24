@@ -15,7 +15,7 @@ package Lucene42.src.cl.qvt.structure;
  * clase que es el modelo de los tweeter en la bd
  */
 
-public class Tweet {
+public class Tweets {
     public String _id;
     public String id;
     public String tweet;
@@ -25,8 +25,9 @@ public class Tweet {
     public String hour;
     public String RTcount;
     public String LIKEcount;
+    public String anio;
 
-    public Tweet(String _id, String id, String tweet, String username, String day, String mouth, String hour, String RTcount, String LIKEcount) {
+    public Tweets(String _id, String id, String tweet, String username, String day, String mouth,String anio, String hour, String RTcount, String LIKEcount) {
         this._id = _id;
         this.id = id;
         this.tweet = tweet;
@@ -34,8 +35,17 @@ public class Tweet {
         this.day = day;
         this.mouth = mouth;
         this.hour = hour;
+        this.anio=anio;
         this.RTcount = RTcount;
         this.LIKEcount = LIKEcount;
+    }
+
+    public String getAnio() {
+        return anio;
+    }
+
+    public void setAnio(String anio) {
+        this.anio = anio;
     }
 
     public String get_Id() {
@@ -116,6 +126,7 @@ public class Tweet {
         System.out.println("username:"+username);
         System.out.println("day:"+day);
         System.out.println("month:"+mouth);
+        System.out.println("año:"+anio);
         System.out.println("hour:"+hour);
         System.out.println("RTcount:"+RTcount);
         System.out.println("LIKEcount"+LIKEcount);

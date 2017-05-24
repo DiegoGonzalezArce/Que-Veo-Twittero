@@ -2,7 +2,7 @@ package Lucene42.src.cl.qvt.parser;
 
 
 import Lucene42.src.cl.qvt.nlp.NLPTools;
-import Lucene42.src.cl.qvt.structure.Tweet;
+import Lucene42.src.cl.qvt.structure.Tweets;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -38,7 +38,7 @@ public class TweetParser {
 			List<String> list = tool.getContent(archivoDat);
 			for (Iterator iter = list.iterator(); iter.hasNext();) {
 				String elem = (String) iter.next();
-                                Pattern p = Pattern.compile("\\{\"_id\":\\{\"\\$oid\":\"(.*)\"\\},\"id\":\\{\"\\$numberLong\":\"(.*)\"\\},\"tweet\":\"(.*)\",\"username\":\"(.*)\",\"day\":\"(.*)\",\"mouth\":\"(.*)\",\"hour\":\"(.*)\",\"RTcount\":([0-9]*),\"LIKEcount\":([0-9]*)\\}");
+                                Pattern p = Pattern.compile("\\{\"_id\":\\{\"\\$oid\":\"(.*)\"\\},\"id\":\\{\"\\$numberLong\":\"(.*)\"\\},\"tweet\":\"(.*)\",\"username\":\"(.*)\",\"day\":\"(.*)\",\"mouth\":\"(.*)\",\"anio\":\"(.*)\",\"hour\":\"(.*)\",\"RTcount\":([0-9]*),\"LIKEcount\":([0-9]*)\\}");
                                 Matcher m = p.matcher(elem);
                                 m.find();
 				String _id = m.group(1).toString();
@@ -47,10 +47,11 @@ public class TweetParser {
 				String username = m.group(4).toString();
 				String day = m.group(5).toString();
 				String mouth = m.group(6).toString();
-				String hour = m.group(7).toString();
-				String RTcount = m.group(8).toString();
-				String LIKEcount = m.group(9).toString();
-				Tweet tweets = new Tweet(_id,id,tweet,username,day,mouth,hour,RTcount,LIKEcount); 
+                                String anio = m.group(7).toString();
+				String hour = m.group(8).toString();
+				String RTcount = m.group(9).toString();
+				String LIKEcount = m.group(10).toString();
+				Tweets tweets = new Tweets(_id,id,tweet,username,day,mouth,anio,hour,RTcount,LIKEcount); 
 				vectorPosts.add(tweets);
 			}
 			return vectorPosts;

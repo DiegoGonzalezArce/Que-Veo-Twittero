@@ -101,8 +101,8 @@ public class TwitterStreaming{
 
 				//Identificacion de mongoDB (Si se siguio el tutorial, estos deberian ser las identificaciones.)
 				
-                                char[] password = {'a','d','m','i','n','1','2','3'};
-				//char[] password = {'r','o','o','t'};
+                                //char[] password = {'a','d','m','i','n','1','2','3'};
+				char[] password = {'r','o','o','t'};
 				
 				if(status.getLang().equals("es")){
                                     
@@ -116,12 +116,20 @@ public class TwitterStreaming{
                                         
                                         String  hora = Integer.toString(cale.get(Calendar.HOUR_OF_DAY));
                                         int minutoI = cale.get(Calendar.MINUTE);
+					int segundoI = cale.get(Calendar.SECOND);
                                         String minuto;
                                         if (minutoI < 10){
                                             minuto = "0" + Integer.toString(minutoI);
                                         }
                                         else{
                                              minuto = Integer.toString(minutoI);
+                                        }
+					String segundo;
+					if (segundoI < 10){
+                                            segundo = "0" + Integer.toString(segundoI);
+                                        }
+                                        else{
+                                             segundo = Integer.toString(segundoI);
                                         }
                                    
                             
@@ -133,13 +141,13 @@ public class TwitterStreaming{
 					System.out.println(status.getRetweetCount());
 					System.out.println(status.getFavoriteCount());
                                         System.out.println("Fecha: "+dia+"/"+mes+"/"+anio);
-                                        System.out.println("Hora: "+hora+":"+minuto);
+                                        System.out.println("Hora: "+hora+":"+minuto+":"+segundo);
 					System.out.println("\n");
 					System.out.println("\n");				
 
 					//Idenfiticacion
-					MongoCredential credential = MongoCredential.createCredential("admin", "admin", password);
-					//MongoCredential credential = MongoCredential.createCredential("root", "admin", password);
+					//MongoCredential credential = MongoCredential.createCredential("admin", "admin", password);
+					MongoCredential credential = MongoCredential.createCredential("root", "admin", password);
 					MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017), Arrays.asList(credential));
 
 					//Se crea la BD
@@ -152,8 +160,9 @@ public class TwitterStreaming{
 									    .append("tweet", status.getText())
 									    .append("username", status.getUser().getName())
 									    .append("day", dia)
-                                                                            .append("mouth", mes)
-                                                                            .append("hour",hora+":"+minuto)
+                                                                            .append("month", mes)
+                                                                            .append("anio", anio)
+                                                                            .append("hour",hora+":"+minuto+":"+segundo)
                                                                             .append("RTcount", status.getRetweetCount())    
 									    .append("LIKEcount", status.getFavoriteCount());
                                                                             
