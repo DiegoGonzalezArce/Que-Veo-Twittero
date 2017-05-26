@@ -33,11 +33,8 @@ public class Tweet {
     @Column(name="date", nullable=false)
     private Timestamp date;
 
-    @Column(name="RTcount", nullable=false)
-    private int RTcount;
-    
-    @Column(name="LIKEcount", nullable=false)
-    private int LIKEcount;
+    @Column(name="menciones", nullable=false)
+    private int menciones;
     
     @Column(name="analisis", nullable=false)
     private int analisis;
@@ -77,20 +74,12 @@ public class Tweet {
         this.date = date;
     }
 
-    public int getRTcount() {
-        return RTcount;
+    public int getMenciones() {
+        return menciones;
     }
 
-    public void setRTcount(int RTcount) {
-        this.RTcount = RTcount;
-    }
-
-    public int getLIKEcount() {
-        return LIKEcount;
-    }
-
-    public void setLIKEcount(int LIKEcount) {
-        this.LIKEcount = LIKEcount;
+    public void setMenciones(int menciones) {
+        this.menciones = menciones;
     }
 
     public int getAnalisis() {

@@ -124,8 +124,7 @@ public class TweetService {
             tweet.setComment(d.get("tweet"));
             tweet.setUsername(d.get("username"));
             tweet.setDate(Timestamp.valueOf(d.get("year")+"-"+d.get("month")+"-"+d.get("day")+" "+d.get("hour")));
-            tweet.setRTcount(Integer.parseInt(d.get("RTcount")));
-            tweet.setLIKEcount(Integer.parseInt(d.get("LIKEcount")));
+            tweet.setMenciones(Integer.parseInt(d.get("RTcount")+d.get("LIKEcount")));
             tweet.setAnalisis(sr.addTweetScore(d));
             i++;
             try{
