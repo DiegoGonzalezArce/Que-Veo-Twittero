@@ -38,12 +38,10 @@ public class TweetParser {
 			List<String> list = tool.getContent(archivoDat);
 			for (Iterator iter = list.iterator(); iter.hasNext();) {
 				String elem = (String) iter.next();
-                                System.out.println(elem);
                                 String str="\\{\"_id\":\\{\"\\$oid\":\"(.*)\"\\},\"id\":\\{\"\\$numberLong\":\"(.*)\"\\},\"tweet\":\"(.*)\",\"username\":\"(.*)\",\"day\":\"(.*)\",\"month\":\"(.*)\",\"anio\":\"(.*)\",\"hour\":\"(.*)\",\"RTcount\":([0-9]*),\"LIKEcount\":([0-9]*)\\}";
                                 Pattern p = Pattern.compile(str);
                                 Matcher m = p.matcher(elem);
                                 if(m.find()){
-                                    System.out.println(elem);
                                     String _id = m.group(1).toString();
                                     String id = m.group(2).toString();
                                     String tweet = m.group(3).toString();

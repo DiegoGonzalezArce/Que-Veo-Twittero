@@ -44,7 +44,6 @@ public class LuceneServiceBean {
                         NLPTools tool=new NLPTools();
                         tool.deleteDir(dirPostsIndex);
                         Vector tweetsOut = tweetParser.parsearArchivoOut(ARCHIVO_OUT);
-			System.out.println(tweetsOut);
                         TweetIndexer tweetIndex = new TweetIndexer(dirPostsIndex);			
 			tweetIndex.fillIndexTweets(tweetsOut);
 			tweetIndex.closeIndex();
@@ -57,15 +56,15 @@ public class LuceneServiceBean {
 		
 		return done;
     }
-    public void addTweetScore(Document doc) throws IOException{
+    public int addTweetScore(Document doc) throws IOException{
         NLPTools tool=new NLPTools();
         List<String> lexicon=tool.getContent(ARCHIVO_CSV);
         String content=doc.get("tweet");
         int score=tool.cumulativeScore(content, lexicon);
         //conectar con la bd
         //agregar score al tweet
-        System.out.println("el tweet:"+content+"\t posee el siguiente puntaje:"+score);
-        
+        //System.out.println("el tweet:"+content+"\t posee el siguiente puntaje:"+score);
+        return score;
     }
     
 }

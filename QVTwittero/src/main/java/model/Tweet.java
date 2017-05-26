@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Tweet {  
     @Id
     @Column(name="id_Tweet", unique=true, nullable=false)
-    private int id_Tweet;
+    private long id_Tweet;
 
     @Column(name="comment",nullable=false, length=250)
     private String comment;
@@ -45,11 +45,11 @@ public class Tweet {
     public Tweet() {
     }
 
-    public int getId_Tweet() {
+    public long getId_Tweet() {
         return id_Tweet;
     }
 
-    public void setId_Tweet(int id_Tweet) {
+    public void setId_Tweet(long id_Tweet) {
         this.id_Tweet = id_Tweet;
     }
 

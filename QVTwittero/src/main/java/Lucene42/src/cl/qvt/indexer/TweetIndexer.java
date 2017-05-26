@@ -70,9 +70,9 @@ public class TweetIndexer{
 			docRetrievedTweet.add(new StringField("username", retrievedTweet.username , Field.Store.YES));
 			docRetrievedTweet.add(new StringField("day", retrievedTweet.day , Field.Store.YES));
 			docRetrievedTweet.add(new StringField("month", retrievedTweet.mouth , Field.Store.YES));
+			docRetrievedTweet.add(new StringField("year", retrievedTweet.anio , Field.Store.YES));
 			docRetrievedTweet.add(new StringField("hour", retrievedTweet.hour , Field.Store.YES));
 			docRetrievedTweet.add(new StringField("RTcount", retrievedTweet.RTcount , Field.Store.YES));
-			docRetrievedTweet.add(new StringField("LIKEcount", retrievedTweet.LIKEcount , Field.Store.YES));
 			docRetrievedTweet.add(new StringField("LIKEcount", retrievedTweet.LIKEcount , Field.Store.YES));
 			
 			/* docRetrievedTweet.add(new StringField("comments", retrievedTweet.comments, Field.Store.YES));
