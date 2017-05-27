@@ -7,7 +7,9 @@ package service;
 
 import Lucene42.src.cl.qvt.main.LuceneServiceBean;
 import Lucene42.src.cl.qvt.searcher.TweetSearcher;
+import facade.KeywordFacade;
 import facade.TweetFacade;
+import facade.Tweet_KeywordFacade;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -24,8 +26,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import model.Keyword;
 import model.Programa;
 import model.Tweet;
+import model.Tweet_Keyword;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -43,7 +47,13 @@ import org.apache.lucene.store.FSDirectory;
 public class TweetService {
     @EJB 
     TweetFacade TweetFacadeEJB;
-
+    
+    @EJB 
+    Tweet_KeywordFacade Tweet_KeywordFacadeEJB;
+    
+    @EJB
+    KeywordFacade keywordFacadeEJB;
+    
     Logger logger = Logger.getLogger(TweetService.class.getName());
 	
     @GET
@@ -95,10 +105,7 @@ public class TweetService {
         return result;
     }
 
-    @GET
-    @Path("{keywords}/test")
-    @Produces({"application/xml", "application/json"})
-    public List<Tweet> create(@PathParam("keywords") String keyword) throws IOException, ParseException {
+    public List<Tweet> create(String keyword) throws IOException, ParseException {
         LuceneServiceBean sr = new LuceneServiceBean();
         List<Tweet> entity=new ArrayList<Tweet>();
         String result="";
@@ -138,5 +145,32 @@ public class TweetService {
         }
         return entity;
     }
-
+    @GET
+    @Path("/test")
+    public String test() throws IOException, ParseException{
+        List<Keyword> keywords=keywordFacadeEJB.findAll();
+        if(keywords.isEmpty())return "error";
+        for (Iterator iter = keywords.iterator(); iter.hasNext();){
+            Keyword keyword =(Keyword) iter.next();
+            String word=keyword.getKeyword();
+            List<Tweet> tweets=create(word);
+            for (Iterator iterator = tweets.iterator(); iterator.hasNext();){
+                Tweet tweet=(Tweet) iterator.next();
+                if(Tweet_KeywordFacadeEJB.findRepeated(keyword.getKeywordId(),tweet.getId_Tweet()).isEmpty()){
+                    Tweet_Keyword tweet_keyword=new Tweet_Keyword();
+                    tweet_keyword.setKeyword_id(keyword.getKeywordId());
+                    tweet_keyword.setTweet_id(tweet.getId_Tweet());
+                    try{
+                        Tweet_KeywordFacadeEJB.create(tweet_keyword);
+                    }catch (EJBException e) {
+                
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return "logrado";
+    }
+    
 }
