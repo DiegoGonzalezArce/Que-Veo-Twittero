@@ -18,16 +18,16 @@ import model.Tweet;
  */
 @Stateless
 public class TweetFacadeEJB extends AbstractFacade<Tweet> implements TweetFacade {
-	
+
     @PersistenceContext(unitName = "qvtPU")
     private EntityManager em;
-	
+
     public TweetFacadeEJB() {
-	super(Tweet.class);
+        super(Tweet.class);
     }
 
     @Override
     protected EntityManager getEntityManager() {
-	return this.em;
+        return this.em;
     }
 }

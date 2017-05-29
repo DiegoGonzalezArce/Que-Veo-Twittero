@@ -17,22 +17,22 @@ import javax.persistence.Table;
  * @author yolo
  */
 @Entity
-@Table(name="Tweet_Keyword")
-@NamedQuery(name="Tweet_Keyword.findAll", query="SELECT f FROM Tweet_Keyword f")
-public class Tweet_Keyword implements Serializable{
-    
+@Table(name = "Tweet_Keyword")
+@NamedQuery(name = "Tweet_Keyword.findAll", query = "SELECT f FROM Tweet_Keyword f")
+public class Tweet_Keyword implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @Column(name="idTweet_Keyword", unique=true, nullable=false)
+    @Column(name = "idTweet_Keyword", unique = true, nullable = false)
     private int id_Tweet_Keyword;
 
-    @Column(name="Keyword2_id",nullable=false)
+    @Column(name = "Keyword2_id", nullable = false)
     private int Keyword_id;
 
-    @Column(name="Tweet_id", nullable=false)
+    @Column(name = "Tweet_id", nullable = false)
     private long Tweet_id;
-    
+
     public Tweet_Keyword() {
     }
 
@@ -59,5 +59,5 @@ public class Tweet_Keyword implements Serializable{
     public void setKeyword_id(int Keyword_id) {
         this.Keyword_id = Keyword_id;
     }
-    
+
 }

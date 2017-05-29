@@ -33,4 +33,3 @@ public interface CanalFacade {
 
     public int count();
 }
-

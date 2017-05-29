@@ -16,6 +16,7 @@ import model.Tweet;
  */
 @Local
 public interface TweetFacade {
+
     public void create(Tweet entity);
 
     public void edit(Tweet entity);

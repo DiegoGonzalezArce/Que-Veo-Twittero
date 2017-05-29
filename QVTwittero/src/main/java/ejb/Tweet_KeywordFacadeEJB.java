@@ -18,23 +18,24 @@ import model.Tweet_Keyword;
  * @author yolo
  */
 @Stateless
-public class Tweet_KeywordFacadeEJB extends AbstractFacade<Tweet_Keyword> implements Tweet_KeywordFacade{
+public class Tweet_KeywordFacadeEJB extends AbstractFacade<Tweet_Keyword> implements Tweet_KeywordFacade {
+
     @PersistenceContext(unitName = "qvtPU")
     private EntityManager em;
-	
+
     public Tweet_KeywordFacadeEJB() {
-	super(Tweet_Keyword.class);
+        super(Tweet_Keyword.class);
     }
 
     @Override
     protected EntityManager getEntityManager() {
-	return this.em;
+        return this.em;
     }
-    
+
     @Override
-    public List<Tweet_Keyword> findRepeated(int idKeyword,long idTweet) {
-    return em.createQuery(
-        "SELECT tk FROM Tweet_Keyword tk WHERE tk.Keyword_id="+idKeyword+" AND tk.Tweet_id="+idTweet+"")
-        .getResultList();
+    public List<Tweet_Keyword> findRepeated(int idKeyword, long idTweet) {
+        return em.createQuery(
+                "SELECT tk FROM Tweet_Keyword tk WHERE tk.Keyword_id=" + idKeyword + " AND tk.Tweet_id=" + idTweet + "")
+                .getResultList();
     }
 }

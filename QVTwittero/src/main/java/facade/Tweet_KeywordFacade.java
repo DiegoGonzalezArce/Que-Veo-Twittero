@@ -15,6 +15,7 @@ import model.Tweet_Keyword;
  */
 @Local
 public interface Tweet_KeywordFacade {
+
     public void create(Tweet_Keyword entity);
 
     public void edit(Tweet_Keyword entity);
@@ -26,8 +27,8 @@ public interface Tweet_KeywordFacade {
     public List<Tweet_Keyword> findAll();
 
     public List<Tweet_Keyword> findRange(int[] range);
-    
-    public List<Tweet_Keyword> findRepeated(int idKeyword,long idTweet);
-    
+
+    public List<Tweet_Keyword> findRepeated(int idKeyword, long idTweet);
+
     public int count();
 }

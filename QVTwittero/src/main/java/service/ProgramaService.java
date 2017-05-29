@@ -50,10 +50,10 @@ public class ProgramaService {
 
     @EJB
     KeywordFacade keywordFacadeEJB;
-    
+
     @EJB
     Tweet_KeywordFacade Tweet_KeywordFacadeEJB;
-    
+
     @EJB
     TweetFacade TweetFacadeEJB;
 
@@ -81,23 +81,24 @@ public class ProgramaService {
     public List<Keyword> KPP(@PathParam("id") Integer id) {
         return KeywordPorPrograma(id);
     }
-    
+
     private List<Keyword> KeywordPorPrograma(Integer id) {
-    	List<Programa_Keyword> x = programaKeywordFacadeEJB.findAll();
-    	List<Keyword> y = keywordFacadeEJB.findAll();
-    	List<Keyword> z = new ArrayList<>();
-    	for (Programa_Keyword elem : x) {
-    		if (elem.getProgramaId() == id) {
-    			int a = elem.getKeywordId();
-    			for (Keyword k : y) {
-    				if (k.getKeywordId() == a) {
-    					z.add(k);
-    				}
-    			}
-    		}
-    	}
+        List<Programa_Keyword> x = programaKeywordFacadeEJB.findAll();
+        List<Keyword> y = keywordFacadeEJB.findAll();
+        List<Keyword> z = new ArrayList<>();
+        for (Programa_Keyword elem : x) {
+            if (elem.getProgramaId() == id) {
+                int a = elem.getKeywordId();
+                for (Keyword k : y) {
+                    if (k.getKeywordId() == a) {
+                        z.add(k);
+                    }
+                }
+            }
+        }
         return z;
     }
+
     @POST
     @Consumes({"application/xml", "application/json"})
     public void create(Programa entity) {
@@ -111,70 +112,80 @@ public class ProgramaService {
         entity.setProgramaId(id.intValue());
         programaFacadeEJB.edit(entity);
     }
+
     @GET
     @Path("/positivo/{id}")
     @Consumes({"application/xml", "application/json"})
-    public int pP(@PathParam("id") Integer id){
+    public int pP(@PathParam("id") Integer id) {
         return positivosPrograma(id);
     }
-    private int positivosPrograma(int idPrograma){
-        int resultado=0;
-        List<Tweet> tweets=tweetsPrograma(idPrograma);
-        if(tweets.isEmpty())return resultado;
-        for (Iterator iter = tweets.iterator(); iter.hasNext();){
-            Tweet tweet =(Tweet) iter.next();
-            if(tweet.getAnalisis()>0)resultado++;
-            
+
+    private int positivosPrograma(int idPrograma) {
+        int resultado = 0;
+        List<Tweet> tweets = tweetsPrograma(idPrograma);
+        if (tweets.isEmpty()) {
+            return resultado;
+        }
+        for (Tweet tweet : tweets) {
+            if (tweet.getAnalisis() > 0) {
+                resultado++;
+            }
         }
         return resultado;
     }
+
     @GET
     @Path("/negativo/{id}")
     @Consumes({"application/xml", "application/json"})
-    public int nP(@PathParam("id") Integer id){
+    public int nP(@PathParam("id") Integer id) {
         return negativosPrograma(id);
     }
-    private int negativosPrograma(int idPrograma){
-        int resultado=0;
-        List<Tweet> tweets=tweetsPrograma(idPrograma);
-        if(tweets.isEmpty())return resultado;
-        for (Iterator iter = tweets.iterator(); iter.hasNext();){
-            Tweet tweet =(Tweet) iter.next();
-            if(tweet.getAnalisis()<0)resultado++;
-            
+
+    private int negativosPrograma(int idPrograma) {
+        int resultado = 0;
+        List<Tweet> tweets = tweetsPrograma(idPrograma);
+        if (tweets.isEmpty()) {
+            return resultado;
+        }
+        for (Tweet tweet : tweets) {
+            if (tweet.getAnalisis() < 0) {
+                resultado++;
+            }
+
         }
         return resultado;
     }
-    
+
     @GET
     @Path("/menciones/{id}")
     @Consumes({"application/xml", "application/json"})
-    public int mP(@PathParam("id") Integer id){
+    public int mP(@PathParam("id") Integer id) {
         return mencionesPrograma(id);
     }
-    
-    private int mencionesPrograma(int idPrograma){
-        int resultado=0;
-        List<Tweet> tweets=tweetsPrograma(idPrograma);
-        if(tweets.isEmpty())return resultado;
-        for (Iterator iter = tweets.iterator(); iter.hasNext();){
-            Tweet tweet =(Tweet) iter.next();
-            resultado=resultado+tweet.getMenciones();
-            
+
+    private int mencionesPrograma(int idPrograma) {
+        int resultado = 0;
+        List<Tweet> tweets = tweetsPrograma(idPrograma);
+        if (tweets.isEmpty()) {
+            return resultado;
+        }
+        for (Tweet tweet : tweets) {
+            resultado = resultado + tweet.getMenciones();
         }
         return resultado;
     }
-    private List<Tweet> tweetsPrograma(int idPrograma){
-        List<Tweet> resultado=new ArrayList<Tweet>();
-        List<Keyword> keywords=KeywordPorPrograma(idPrograma);
-        if(keywords.isEmpty())return resultado;
-        for (Iterator iter = keywords.iterator(); iter.hasNext();){
-            Keyword keyword =(Keyword) iter.next();
-            List<Tweet_Keyword> tweet_keywords=Tweet_KeywordFacadeEJB.findAll();
-            for (Iterator iterator = tweet_keywords.iterator(); iterator.hasNext();){
-                Tweet_Keyword tweet_keyword=(Tweet_Keyword) iterator.next();
-                if(tweet_keyword.getKeyword_id()==keyword.getKeywordId()){
-                    Tweet tweet=TweetFacadeEJB.find(tweet_keyword.getTweet_id());
+
+    private List<Tweet> tweetsPrograma(int idPrograma) {
+        List<Tweet> resultado = new ArrayList<Tweet>();
+        List<Keyword> keywords = KeywordPorPrograma(idPrograma);
+        List<Tweet_Keyword> tweet_keywords = Tweet_KeywordFacadeEJB.findAll();
+        if (keywords.isEmpty()) {
+            return resultado;
+        }
+        for (Keyword keyword : keywords) {
+            for (Tweet_Keyword tweet_keyword : tweet_keywords) {
+                if (tweet_keyword.getKeyword_id() == keyword.getKeywordId()) {
+                    Tweet tweet = TweetFacadeEJB.find(tweet_keyword.getTweet_id());
                     resultado.add(tweet);
                 }
             }

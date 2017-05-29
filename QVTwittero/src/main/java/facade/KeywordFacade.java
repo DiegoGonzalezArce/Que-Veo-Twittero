@@ -33,4 +33,3 @@ public interface KeywordFacade {
 
     public int count();
 }
-

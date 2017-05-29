@@ -39,67 +39,67 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import twitter4j.TwitterException;
+import javax.servlet.*;
 
 /**
  *
  * @author yolo
  */
-
 @Path("/tweets")
 public class TweetService {
-    @EJB 
+
+    @EJB
     TweetFacade TweetFacadeEJB;
-    
-    @EJB 
+
+    @EJB
     Tweet_KeywordFacade Tweet_KeywordFacadeEJB;
-    
+
     @EJB
     KeywordFacade keywordFacadeEJB;
-    
+
     Logger logger = Logger.getLogger(TweetService.class.getName());
-	
+
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<Tweet> findAll(){
-    	return TweetFacadeEJB.findAll();
+    public List<Tweet> findAll() {
+        return TweetFacadeEJB.findAll();
     }
 
-	
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Tweet find(@PathParam("id") Integer id) {
         return TweetFacadeEJB.find(id);
     }
+
     @GET
-    @Path("/test2")
-    public String index() throws IOException, ParseException{
+    @Path("/luceneupdate")
+    public String index() throws IOException, ParseException {
         LuceneServiceBean sr = new LuceneServiceBean();
         sr.updateIndex();
         return "logrado";
     }
-    
+
     @GET
     @Path("{keywords}")
-    public String search(@PathParam("keywords") String keyword) throws IOException, ParseException{
-        String result="";
-        String[] temp=keyword.split(" ");
+    public String search(@PathParam("keywords") String keyword) throws IOException, ParseException {
+        String result = "";
+        String[] temp = keyword.split(" ");
         TweetSearcher ts = new TweetSearcher();
         Directory index = FSDirectory.open(new File("QVT/Index"));
         IndexReader reader = DirectoryReader.open(index);
         //String input= "master";
-        List<String> input=new ArrayList<String>();
-        
-        for(int i=0;i<temp.length;i++){
+        List<String> input = new ArrayList<String>();
+
+        for (int i = 0; i < temp.length; i++) {
             input.add(temp[i]);
         }
-        List<Integer> a=ts.searchDocIds(reader, input, "tweet", 5000);
+        List<Integer> a = ts.searchDocIds(reader, input, "tweet", 5000);
         IndexSearcher searcher = new IndexSearcher(reader);
-        int i=0;
-        for (Iterator iter = a.iterator(); iter.hasNext();) {
-            int docId =(Integer) iter.next();
+        int i = 0;
+        for (Integer docId : a) {
             Document d = searcher.doc(docId);
-            result=result+(i + 1) + ". Id:"+d.get("id") +"\t user:"+ d.get("username") + "\t tweet:" + d.get("tweet")+"\n";
+            result = result + (i + 1) + ". Id:" + d.get("id") + "\t user:" + d.get("username") + "\t tweet:" + d.get("tweet") + "\n";
             //System.out.println((i + 1) + ". Id:"+d.get("id") +"\t user:"+ d.get("username") + "\t tweet:" + d.get("tweet"));
             //sr.addTweetScore(d);
             i++;
@@ -110,64 +110,63 @@ public class TweetService {
     private List<Tweet> create(String keyword) throws IOException, ParseException, TwitterException {
         TwitterConnection tc = new TwitterConnection();
         LuceneServiceBean sr = new LuceneServiceBean();
-        List<Tweet> entity=new ArrayList<Tweet>();
-        String result="";
-        String[] temp=keyword.split(" ");
+        List<Tweet> entity = new ArrayList<Tweet>();
+        String result = "";
+        String[] temp = keyword.split(" ");
         TweetSearcher ts = new TweetSearcher();
         Directory index = FSDirectory.open(new File("QVT/Index"));
         IndexReader reader = DirectoryReader.open(index);
         //String input= "master";
-        List<String> input=new ArrayList<String>();
-        
-        for(int i=0;i<temp.length;i++){
+        List<String> input = new ArrayList<String>();
+
+        for (int i = 0; i < temp.length; i++) {
             input.add(temp[i]);
         }
-        List<Integer> a=ts.searchDocIds(reader, input, "tweet", 5000);
+        List<Integer> a = ts.searchDocIds(reader, input, "tweet", 5000);
         IndexSearcher searcher = new IndexSearcher(reader);
-        int i=0;
-        for (Iterator iter = a.iterator(); iter.hasNext();) {            
-            int docId =(Integer) iter.next();
+        int i = 0;
+        for (Integer docId : a) {
             Document d = searcher.doc(docId);
-            Tweet tweet=new Tweet();
-            System.out.println("id:"+d.get("id")+" tweet:"+d.get("tweet")+" user:"+d.get("username")+" time:"+d.get("year")+"-"+d.get("month")+"-"+d.get("day")+" "+d.get("hour")+" RTs:"+d.get("RTcount")+" Likes:"+d.get("LIKEcount")+" score:"+sr.addTweetScore(d));
+            Tweet tweet = new Tweet();
+            System.out.println("id:" + d.get("id") + " tweet:" + d.get("tweet") + " user:" + d.get("username") + " time:" + d.get("year") + "-" + d.get("month") + "-" + d.get("day") + " " + d.get("hour") + " RTs:" + d.get("RTcount") + " Likes:" + d.get("LIKEcount") + " score:" + sr.addTweetScore(d));
             tweet.setId_Tweet(Long.valueOf(d.get("id")).longValue());
             tweet.setComment(d.get("tweet"));
             tweet.setUsername(d.get("username"));
-            tweet.setDate(Timestamp.valueOf(d.get("year")+"-"+d.get("month")+"-"+d.get("day")+" "+d.get("hour")));
-            tweet.setMenciones(Integer.parseInt(d.get("RTcount")+d.get("LIKEcount")));
+            tweet.setDate(Timestamp.valueOf(d.get("year") + "-" + d.get("month") + "-" + d.get("day") + " " + d.get("hour")));
+            tweet.setMenciones(Integer.parseInt(d.get("RTcount") + d.get("LIKEcount")));
             //tweet.setMenciones(tc.getMencionesbyID(Long.parseLong(d.get("id"))));
             tweet.setAnalisis(sr.addTweetScore(d));
             i++;
-            try{
+            try {
                 TweetFacadeEJB.create(tweet);
                 entity.add(tweet);
-            }catch (EJBException e) {
-                
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+            } catch (EJBException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
         return entity;
     }
+
     @GET
     @Path("/store")
-    public String test() throws IOException, ParseException, TwitterException{
-        List<Keyword> keywords=keywordFacadeEJB.findAll();
-        if(keywords.isEmpty())return "error";
-        for (Iterator iter = keywords.iterator(); iter.hasNext();){
-            Keyword keyword =(Keyword) iter.next();
-            String word=keyword.getKeyword();
-            List<Tweet> tweets=create(word);
-            for (Iterator iterator = tweets.iterator(); iterator.hasNext();){
-                Tweet tweet=(Tweet) iterator.next();
-                if(Tweet_KeywordFacadeEJB.findRepeated(keyword.getKeywordId(),tweet.getId_Tweet()).isEmpty()){
-                    Tweet_Keyword tweet_keyword=new Tweet_Keyword();
+    public String test() throws IOException, ParseException, TwitterException {
+        List<Keyword> keywords = keywordFacadeEJB.findAll();
+        if (keywords.isEmpty()) {
+            return "error";
+        }
+        for (Keyword keyword : keywords) {
+            String word = keyword.getKeyword();
+            List<Tweet> tweets = create(word);
+            for (Tweet tweet : tweets) {
+                if (Tweet_KeywordFacadeEJB.findRepeated(keyword.getKeywordId(), tweet.getId_Tweet()).isEmpty()) {
+                    Tweet_Keyword tweet_keyword = new Tweet_Keyword();
                     tweet_keyword.setKeyword_id(keyword.getKeywordId());
                     tweet_keyword.setTweet_id(tweet.getId_Tweet());
-                    try{
+                    try {
                         Tweet_KeywordFacadeEJB.create(tweet_keyword);
-                    }catch (EJBException e) {
-                
+                    } catch (EJBException e) {
+
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
@@ -176,26 +175,36 @@ public class TweetService {
         }
         return "logrado";
     }
-    
+
     @GET
     @Path("/update")
-    public String update() throws IOException, ParseException, TwitterException{
-        List<Tweet> tweets=TweetFacadeEJB.findAll();
-        TwitterConnection conexion=new TwitterConnection();
-        if(tweets.isEmpty())return "error";
-        for (Iterator iter = tweets.iterator(); iter.hasNext();){
-            Tweet tweet =(Tweet) iter.next();
-            long id=tweet.getId_Tweet();
-            tweet.setMenciones(conexion.getMencionesbyID(id));
-            try{
-                TweetFacadeEJB.edit(tweet);
-            }catch (EJBException e) {
-                        // TODO Auto-generated catch block
-                e.printStackTrace();
+    public String update() throws IOException, ParseException, TwitterException {
+        List<Tweet> tweets = TweetFacadeEJB.findAll();
+        TwitterConnection conexion = new TwitterConnection();
+        if (tweets.isEmpty()) {
+            return "error";
+        }
+        for (Tweet tweet : tweets) {
+            long id = tweet.getId_Tweet();
+            try {
+                tweet.setMenciones(conexion.getMencionesbyID(id));
+                try {
+                    TweetFacadeEJB.edit(tweet);
+                } catch (EJBException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } catch (TwitterException te) {
+                tweet.setMenciones(1);
+                try {
+                    TweetFacadeEJB.edit(tweet);
+                } catch (EJBException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
-            
+
         }
         return "logrado";
     }
-    
 }

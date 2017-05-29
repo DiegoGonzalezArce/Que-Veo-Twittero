@@ -17,26 +17,27 @@ import javax.persistence.Table;
  * @author yolo
  */
 @Entity
-@Table(name="Tweet")
-@NamedQuery(name="Tweet.findAll", query="SELECT f FROM Tweet f")
-public class Tweet {  
+@Table(name = "Tweet")
+@NamedQuery(name = "Tweet.findAll", query = "SELECT f FROM Tweet f")
+public class Tweet {
+
     @Id
-    @Column(name="id_Tweet", unique=true, nullable=false)
+    @Column(name = "id_Tweet", unique = true, nullable = false)
     private long id_Tweet;
 
-    @Column(name="comment",nullable=false, length=250)
+    @Column(name = "comment", nullable = false, length = 250)
     private String comment;
 
-    @Column(name="username", nullable=false, length=45)
+    @Column(name = "username", nullable = false, length = 45)
     private String username;
 
-    @Column(name="date", nullable=false)
+    @Column(name = "date", nullable = false)
     private Timestamp date;
 
-    @Column(name="menciones", nullable=false)
+    @Column(name = "menciones", nullable = false)
     private int menciones;
-    
-    @Column(name="analisis", nullable=false)
+
+    @Column(name = "analisis", nullable = false)
     private int analisis;
 
     public Tweet() {
@@ -89,7 +90,5 @@ public class Tweet {
     public void setAnalisis(int analisis) {
         this.analisis = analisis;
     }
-    
-    
 
 }

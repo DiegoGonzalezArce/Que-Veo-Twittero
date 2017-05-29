@@ -61,14 +61,14 @@ public class KeywordService {
         entity.setKeywordId(id.intValue());
         keywordFacadeEJB.edit(entity);
     }
+
     @GET
     @Path("/export")
-    public String export(){
-        try{
+    public String export() {
+        try {
             PrintWriter writer = new PrintWriter("QVT/words.dat", "UTF-8");
-            List<Keyword> keywords=keywordFacadeEJB.findAll();
-            for (Iterator iter = keywords.iterator(); iter.hasNext();){
-                Keyword keyword=(Keyword) iter.next();
+            List<Keyword> keywords = keywordFacadeEJB.findAll();
+            for (Keyword keyword : keywords) {
                 writer.println(keyword.getKeyword());
             }
             writer.close();
