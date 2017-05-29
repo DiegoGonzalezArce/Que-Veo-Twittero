@@ -32,7 +32,12 @@ import facade.KeywordFacade;
 import model.Keyword;
 
 import facade.Programa_KeywordFacade;
+import facade.TweetFacade;
+import facade.Tweet_KeywordFacade;
+import java.util.Iterator;
 import model.Programa_Keyword;
+import model.Tweet;
+import model.Tweet_Keyword;
 
 @Path("/programas")
 public class ProgramaService {
@@ -45,6 +50,12 @@ public class ProgramaService {
 
     @EJB
     KeywordFacade keywordFacadeEJB;
+    
+    @EJB
+    Tweet_KeywordFacade Tweet_KeywordFacadeEJB;
+    
+    @EJB
+    TweetFacade TweetFacadeEJB;
 
     @EJB
     Programa_KeywordFacade programaKeywordFacadeEJB;
@@ -67,11 +78,14 @@ public class ProgramaService {
     @GET
     @Path("{id}/keywords")
     @Produces({"application/xml", "application/json"})
-    public List<Keyword> KeywordPorPrograma(@PathParam("id") Integer id) {
+    public List<Keyword> KPP(@PathParam("id") Integer id) {
+        return KeywordPorPrograma(id);
+    }
+    
+    private List<Keyword> KeywordPorPrograma(Integer id) {
     	List<Programa_Keyword> x = programaKeywordFacadeEJB.findAll();
     	List<Keyword> y = keywordFacadeEJB.findAll();
     	List<Keyword> z = new ArrayList<>();
-
     	for (Programa_Keyword elem : x) {
     		if (elem.getProgramaId() == id) {
     			int a = elem.getKeywordId();
@@ -84,7 +98,6 @@ public class ProgramaService {
     	}
         return z;
     }
-
     @POST
     @Consumes({"application/xml", "application/json"})
     public void create(Programa entity) {
@@ -98,4 +111,51 @@ public class ProgramaService {
         entity.setProgramaId(id.intValue());
         programaFacadeEJB.edit(entity);
     }
+    @GET
+    @Path("/positivo/{id}")
+    @Consumes({"application/xml", "application/json"})
+    public int pP(@PathParam("id") Integer id){
+        return positivosPrograma(id);
+    }
+    private int positivosPrograma(int idPrograma){
+        int resultado=0;
+        List<Keyword> keywords=KeywordPorPrograma(idPrograma);
+        if(keywords.isEmpty())return resultado;
+        for (Iterator iter = keywords.iterator(); iter.hasNext();){
+            Keyword keyword =(Keyword) iter.next();
+            List<Tweet_Keyword> tweet_keywords=Tweet_KeywordFacadeEJB.findAll();
+            for (Iterator iterator = tweet_keywords.iterator(); iterator.hasNext();){
+                Tweet_Keyword tweet_keyword=(Tweet_Keyword) iterator.next();
+                if(tweet_keyword.getKeyword_id()==keyword.getKeywordId()){
+                    Tweet tweet=TweetFacadeEJB.find(tweet_keyword.getTweet_id());
+                    if(tweet.getAnalisis()>0)resultado++;
+                }
+            }
+        }
+        return resultado;
+    }
+    @GET
+    @Path("/negativo/{id}")
+    @Consumes({"application/xml", "application/json"})
+    public int nP(@PathParam("id") Integer id){
+        return negativosPrograma(id);
+    }
+    private int negativosPrograma(int idPrograma){
+        int resultado=0;
+        List<Keyword> keywords=KeywordPorPrograma(idPrograma);
+        if(keywords.isEmpty())return resultado;
+        for (Iterator iter = keywords.iterator(); iter.hasNext();){
+            Keyword keyword =(Keyword) iter.next();
+            List<Tweet_Keyword> tweet_keywords=Tweet_KeywordFacadeEJB.findAll();
+            for (Iterator iterator = tweet_keywords.iterator(); iterator.hasNext();){
+                Tweet_Keyword tweet_keyword=(Tweet_Keyword) iterator.next();
+                if(tweet_keyword.getKeyword_id()==keyword.getKeywordId()){
+                    Tweet tweet=TweetFacadeEJB.find(tweet_keyword.getTweet_id());
+                    if(tweet.getAnalisis()<0)resultado++;
+                }
+            }
+        }
+        return resultado;
+    }
+    
 }

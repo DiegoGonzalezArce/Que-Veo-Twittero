@@ -42,7 +42,7 @@ public class TwitterConnection {
         return Likecontador;
     } 
     
-    public int getMencionesbyID(Long id) throws TwitterException{
+    public int getMencionesbyID(long id) throws TwitterException{
         Status status = this.twitter.showStatus(id);
         int RTcontador = status.getRetweetCount();
         int Likecontador = status.getFavoriteCount();

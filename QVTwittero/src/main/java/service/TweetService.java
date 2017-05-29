@@ -107,7 +107,7 @@ public class TweetService {
         return result;
     }
 
-    public List<Tweet> create(String keyword) throws IOException, ParseException, TwitterException {
+    private List<Tweet> create(String keyword) throws IOException, ParseException, TwitterException {
         TwitterConnection tc = new TwitterConnection();
         LuceneServiceBean sr = new LuceneServiceBean();
         List<Tweet> entity=new ArrayList<Tweet>();
