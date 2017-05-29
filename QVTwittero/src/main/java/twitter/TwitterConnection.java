@@ -46,6 +46,6 @@ public class TwitterConnection {
         Status status = this.twitter.showStatus(id);
         int RTcontador = status.getRetweetCount();
         int Likecontador = status.getFavoriteCount();
-        return RTcontador + Likecontador;
+        return RTcontador + Likecontador+1;
     }
 }

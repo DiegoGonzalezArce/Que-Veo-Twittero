@@ -150,7 +150,7 @@ public class TweetService {
         return entity;
     }
     @GET
-    @Path("/test")
+    @Path("/store")
     public String test() throws IOException, ParseException, TwitterException{
         List<Keyword> keywords=keywordFacadeEJB.findAll();
         if(keywords.isEmpty())return "error";
@@ -173,6 +173,27 @@ public class TweetService {
                     }
                 }
             }
+        }
+        return "logrado";
+    }
+    
+    @GET
+    @Path("/update")
+    public String update() throws IOException, ParseException, TwitterException{
+        List<Tweet> tweets=TweetFacadeEJB.findAll();
+        TwitterConnection conexion=new TwitterConnection();
+        if(tweets.isEmpty())return "error";
+        for (Iterator iter = tweets.iterator(); iter.hasNext();){
+            Tweet tweet =(Tweet) iter.next();
+            long id=tweet.getId_Tweet();
+            tweet.setMenciones(conexion.getMencionesbyID(id));
+            try{
+                TweetFacadeEJB.edit(tweet);
+            }catch (EJBException e) {
+                        // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
         }
         return "logrado";
     }
