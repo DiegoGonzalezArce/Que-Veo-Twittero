@@ -22,6 +22,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import facade.KeywordFacade;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
 import model.Keyword;
 
 @Path("/keywords")
@@ -57,5 +60,22 @@ public class KeywordService {
     public void edit(@PathParam("id") Integer id, Keyword entity) {
         entity.setKeywordId(id.intValue());
         keywordFacadeEJB.edit(entity);
+    }
+    @GET
+    @Path("/export")
+    public String export(){
+        try{
+            PrintWriter writer = new PrintWriter("QVT/words.dat", "UTF-8");
+            List<Keyword> keywords=keywordFacadeEJB.findAll();
+            for (Iterator iter = keywords.iterator(); iter.hasNext();){
+                Keyword keyword=(Keyword) iter.next();
+                writer.println(keyword.getKeyword());
+            }
+            writer.close();
+        } catch (IOException e) {
+            // do something
+            return "error de IO";
+        }
+        return "logrado";
     }
 }
