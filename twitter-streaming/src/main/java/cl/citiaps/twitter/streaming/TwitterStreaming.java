@@ -164,7 +164,9 @@ public class TwitterStreaming{
                                                                             .append("anio", anio)
                                                                             .append("hour",hora+":"+minuto+":"+segundo)
                                                                             .append("RTcount", status.getRetweetCount())    
-									    .append("LIKEcount", status.getFavoriteCount());
+									    .append("LIKEcount", status.getFavoriteCount())
+                                                                            .append("Menciones", status.getRetweetCount() + status.getFavoriteCount());
+                                                                                
                                                                             
 					//Lo inserta en la colleccteion MyTestCollection de la BD test.
 					coll.insertOne(doc);

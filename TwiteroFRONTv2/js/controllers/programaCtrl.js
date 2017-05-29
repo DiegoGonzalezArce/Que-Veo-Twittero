@@ -14,6 +14,10 @@ angular.module('mainModule')
 			});
 		}
 		getProgramas();
+
+		programas.sort(function(a, b) {
+   			 return parseFloat(a.menciones) - parseFloat(b.menciones);
+		});
 		//Llamo al servicio
 		//$scope.programaId = $scope.programas[programaId].programaId;
 		//this.programaId = $scope.programaId;

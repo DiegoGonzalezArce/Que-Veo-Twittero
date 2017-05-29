@@ -44,6 +44,13 @@ public class TwitterConnection {
         return Likecontador;
     } 
     
+    public int getMencionesbyID(long id) throws TwitterException{
+        Status status = this.twitter.showStatus(id);
+        int RTcontador = status.getRetweetCount();
+        int Likecontador = status.getFavoriteCount();
+        return RTcontador + Likecontador;
+    }
+    
     public ArrayList<Integer> getCountofAllTweets() throws TwitterException{
         //CONEXION
         //char[] password = {'a','d','m','i','n','1','2','3'};
@@ -89,7 +96,7 @@ public class TwitterConnection {
                      Se repite con todos los tweets (hasta que se repasen todas las ID's)
                       
     */
-    public ArrayList<Integer> getCountfromIDs(ArrayList<Long> IDs) throws TwitterException{
+    public ArrayList<Integer> getListCountfromIDs(ArrayList<Long> IDs) throws TwitterException{
         ArrayList<Integer> retorno = new ArrayList<>();
         int RTcount = 0;
         int Likecount = 0;
@@ -108,6 +115,26 @@ public class TwitterConnection {
         retorno.add(0, RTcount);
         retorno.add(1, Likecount);
         
+        return retorno;
+    }
+    
+        public Integer getCountfromIDs(ArrayList<Long> IDs) throws TwitterException{
+        int retorno = 0;
+        int RTcount = 0;
+        int Likecount = 0;
+        
+        for(Long id : IDs){
+            //Obtiene el status con esa id
+            Status status = this.twitter.showStatus(id);
+            //Obtiene los contadores actualizadores.
+            int RTtemp = status.getFavoriteCount();
+            int Liketemp = status.getFavoriteCount();
+            //Suma a los contadores globales
+            RTcount = RTcount + RTtemp;
+            Likecount = Likecount + Liketemp;
+            
+        }
+        retorno = RTcount + Likecount;
         return retorno;
     }
 }

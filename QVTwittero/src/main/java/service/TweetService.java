@@ -5,6 +5,7 @@
  */
 package service;
 
+import twitter.TwitterConnection;
 import Lucene42.src.cl.qvt.main.LuceneServiceBean;
 import Lucene42.src.cl.qvt.searcher.TweetSearcher;
 import facade.KeywordFacade;
@@ -37,6 +38,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import twitter4j.TwitterException;
 
 /**
  *
@@ -105,7 +107,8 @@ public class TweetService {
         return result;
     }
 
-    public List<Tweet> create(String keyword) throws IOException, ParseException {
+    public List<Tweet> create(String keyword) throws IOException, ParseException, TwitterException {
+        TwitterConnection tc = new TwitterConnection();
         LuceneServiceBean sr = new LuceneServiceBean();
         List<Tweet> entity=new ArrayList<Tweet>();
         String result="";
@@ -132,6 +135,7 @@ public class TweetService {
             tweet.setUsername(d.get("username"));
             tweet.setDate(Timestamp.valueOf(d.get("year")+"-"+d.get("month")+"-"+d.get("day")+" "+d.get("hour")));
             tweet.setMenciones(Integer.parseInt(d.get("RTcount")+d.get("LIKEcount")));
+            //tweet.setMenciones(tc.getMencionesbyID(Long.parseLong(d.get("id"))));
             tweet.setAnalisis(sr.addTweetScore(d));
             i++;
             try{
@@ -147,7 +151,7 @@ public class TweetService {
     }
     @GET
     @Path("/test")
-    public String test() throws IOException, ParseException{
+    public String test() throws IOException, ParseException, TwitterException{
         List<Keyword> keywords=keywordFacadeEJB.findAll();
         if(keywords.isEmpty())return "error";
         for (Iterator iter = keywords.iterator(); iter.hasNext();){
