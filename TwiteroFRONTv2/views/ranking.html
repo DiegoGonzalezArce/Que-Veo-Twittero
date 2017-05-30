@@ -24,7 +24,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr ng-repeat= "x in programas">
+                                  <tr ng-repeat= "x in programas | orderBy:'-menciones'">
                                  
                                     <td>{{$index + 1}}</td>
                                      <td><li><a href="#/programa/{{x.programaId}}">{{x.nombre}}</a></li></td>  

@@ -81,7 +81,7 @@ public class ProgramaService {
     public List<Keyword> KPP(@PathParam("id") Integer id) {
         return KeywordPorPrograma(id);
     }
-
+    
     private List<Keyword> KeywordPorPrograma(Integer id) {
         List<Programa_Keyword> x = programaKeywordFacadeEJB.findAll();
         List<Keyword> y = keywordFacadeEJB.findAll();
@@ -191,5 +191,53 @@ public class ProgramaService {
             }
         }
         return resultado;
+    }
+    
+    
+    @GET
+    @Path("/mencionesupdate")
+    public String updatemenciones(){
+        List<Programa> programs = programaFacadeEJB.findAll();
+        if(programs.isEmpty()){
+            return "error";
+        }
+        
+        for(Programa program : programs){
+            program.setMenciones(mencionesPrograma(program.getProgramaId()));
+            programaFacadeEJB.edit(program);
+        }
+        return "logrado";
+        
+    }
+    @GET
+    @Path("/positivosupdate")
+    public String updatepositivos(){
+        List<Programa> programs = programaFacadeEJB.findAll();
+        if(programs.isEmpty()){
+            return "error";
+        }
+        
+        for(Programa program : programs){
+            program.setMencionesPositivas(positivosPrograma(program.getProgramaId()));
+            programaFacadeEJB.edit(program);
+        }
+        return "logrado";
+        
+    }
+    
+    @GET
+    @Path("/negativosupdate")
+    public String updatenegativos(){
+        List<Programa> programs = programaFacadeEJB.findAll();
+        if(programs.isEmpty()){
+            return "error";
+        }
+        
+        for(Programa program : programs){
+            program.setMencionesNegativas(negativosPrograma(program.getProgramaId()));
+            programaFacadeEJB.edit(program);
+        }
+        return "logrado";
+        
     }
 }
