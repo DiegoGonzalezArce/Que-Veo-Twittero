@@ -39,7 +39,6 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import twitter4j.TwitterException;
-import javax.servlet.*;
 
 /**
  *
@@ -206,5 +205,18 @@ public class TweetService {
 
         }
         return "logrado";
+    }
+
+    @GET
+    @Path("/mongoexport")
+    public String mongoExport() throws IOException {
+        String command = "mongoexport -u root -p root --authenticationDatabase admin "
+                + "-d test -c myTestCollection -o QVT/exp.out";
+        try {
+            Process p = Runtime.getRuntime().exec(command);
+        } catch (IOException ioe) {
+            return "Fallo en la exportación";
+        }
+        return "Logrado";
     }
 }
