@@ -28,11 +28,9 @@ public class Programa implements Serializable {
     @Column(name = "id_programa", unique = true, nullable = false)
     private int programaId;
 
-    @Id
     @Column(name = "canal_id", nullable = false)
     private int canalId;
 
-    @Id
     @Column(name = "usuario_id", nullable = false)
     private int usuarioId;
 

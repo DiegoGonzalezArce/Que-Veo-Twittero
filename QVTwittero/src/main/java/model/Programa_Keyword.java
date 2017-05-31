@@ -23,11 +23,9 @@ public class Programa_Keyword implements Serializable {
     @Column(name = "id_programa_keyword", unique = true, nullable = false)
     private int programaKeywordId;
 
-    @Id
     @Column(name = "programa_id", nullable = false)
     private int programaId;
 
-    @Id
     @Column(name = "keyword_id", nullable = false)
     private int keywordId;
 

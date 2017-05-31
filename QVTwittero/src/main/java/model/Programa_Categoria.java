@@ -23,11 +23,9 @@ public class Programa_Categoria implements Serializable {
     @Column(name = "id_programa_categoria", unique = true, nullable = false)
     private int programaCategoriaId;
 
-    @Id
     @Column(name = "programa_id", nullable = false)
     private int programaId;
 
-    @Id
     @Column(name = "categoria_id", nullable = false)
     private int categoriaId;
 
