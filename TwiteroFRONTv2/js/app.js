@@ -1,6 +1,8 @@
-var app = angular.module('mainModule', [
-	'ngRoute'
-	]);
+var app = angular.module('mainModule', ['ngRoute', 'd3']);
+//Modulo para el grafico
+angular.module('d3', []);
+
+
 app.config(function($routeProvider, $locationProvider){
 	$locationProvider.hashPrefix('');
 	$routeProvider

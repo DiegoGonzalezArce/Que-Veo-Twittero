@@ -1,8 +1,8 @@
 angular.module('mainModule')
-	.controller('programaCtrl', function($scope, programsService, $location){
+	.controller('programaCtrl', function($scope, programsService, $location, $routeParams){
 		$scope.programas = [];
-		$scope.prueba = $location.absUrl().slice(-1); //obtener el ultimo elemento -> pasarselo al scope???
-
+		//$scope.prueba = $location.absUrl().slice(-1); //obtener el ultimo elemento -> pasarselo al scope???
+		$scope.prueba = $routeParams.programaId;
 		function getProgramas(){
 			programsService.getPrograms()
 			.success(function(data){
@@ -15,9 +15,7 @@ angular.module('mainModule')
 		}
 		getProgramas();
 
-		// programas.sort(function(a, b) {
-  //  			 return parseFloat(a.menciones) - parseFloat(b.menciones);
-		// });
+
 		//Llamo al servicio
 		//$scope.programaId = $scope.programas[programaId].programaId;
 		//this.programaId = $scope.programaId;
