@@ -88,6 +88,23 @@ public class CategoriaService {
         }
         return z;
     }
+    @GET
+    @Path("/update")
+    public String updateCategoria(){
+        List<Categoria> categorias = categoriaFacadeEJB.findAll();
+        for(Categoria cat : categorias){
+            List<Programa> p = ProgramaPorCategoria(cat.getCategoriaId());
+            int suma = 0;
+            for(Programa pro : p){
+                suma = suma + pro.getMenciones();
+            }
+            cat.setMenciones(suma);
+            categoriaFacadeEJB.edit(cat);
+        }
+        return "logrado";
+        
+    }
+    
 
     @POST
     @Consumes({"application/xml", "application/json"})

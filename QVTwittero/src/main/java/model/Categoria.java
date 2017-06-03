@@ -17,6 +17,7 @@ import javax.persistence.*;
 @NamedQuery(name = "Categoria.findAll", query = "SELECT f FROM Categoria f")
 public class Categoria implements Serializable {
 
+ 
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -28,6 +29,9 @@ public class Categoria implements Serializable {
 
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
+    
+    @Column(name = "menciones", nullable = false)
+    private int menciones;
 
     public Categoria() {
     }
@@ -55,4 +59,19 @@ public class Categoria implements Serializable {
     public void setDescription(String descripcion) {
         this.descripcion = descripcion;
     }
+    
+       /**
+     * @return the menciones
+     */
+    public int getMenciones() {
+        return menciones;
+    }
+
+    /**
+     * @param menciones the menciones to set
+     */
+    public void setMenciones(int menciones) {
+        this.menciones = menciones;
+    }
+
 }
