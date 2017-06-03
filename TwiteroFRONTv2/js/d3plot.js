@@ -25,6 +25,33 @@ angular.module("d3")
         };
     }]);
 
+angular.module("d3")
+    .factory("d3p", ['$document', '$q', '$rootScope',
+    function($document, $q, $rootScope) {
+        var d = $q.defer();
+        function onScriptLoad() {
+          // Load client in the browser
+          $rootScope.$apply(function() { d.resolve(window.d3); });
+        }
+        // Create a script tag with d3 as the source
+        // and call our onScriptLoad callback when it
+        // has been loaded
+        var scriptTag = $document[0].createElement('script');
+        scriptTag.type = 'text/javascript';
+        scriptTag.src = 'http://d3js.org/d3.v4.min.js';
+        scriptTag.onreadystatechange = function () {
+          if (this.readyState == 'complete') onScriptLoad();
+        }
+        scriptTag.onload = onScriptLoad;
+
+        var s = $document[0].getElementsByTagName('body')[0];
+        s.appendChild(scriptTag);
+
+        return {
+          d3: function() { return d.promise; }
+        };
+    }]);    
+
 angular.module('mainModule')
 	.directive('d3Ranking', ["d3", function(d3){
 		 return {
@@ -34,7 +61,7 @@ angular.module('mainModule')
             {
                 d3.d3().then(function(d3)
                 {
-        		var margin = {top: 20, right: 20, bottom: 70, left: 40},
+        		var margin = {top: 20, right: 20, bottom: 150, left: 40},
 				    width = 600 - margin.left - margin.right,
 				    height = 300 - margin.top - margin.bottom;
 
@@ -118,3 +145,116 @@ angular.module('mainModule')
 	}]);
 
 
+angular.module('mainModule')
+	.directive('d3Programa', ["d3p", function(d3){
+		 return {
+            restrict: 'EA',
+            scope:{},
+            link: function(scope, element, attrs)
+            {
+            d3.d3().then(function(d3) {
+	        'use strict';
+	          
+	        var torta = [
+			{"label": "Neutrales", "count": 12 },
+			{"label": "Positivas", "count": 100},
+			{"label": "Negativas", "count": 23}
+			];
+
+	        
+	        var width = 360;
+	        var height = 360;
+	        var radius = Math.min(width, height) / 2;
+	        var donutWidth = 75;
+	        var legendRectSize = 18;
+	        var legendSpacing = 5;
+	        var color = d3.scaleOrdinal().range(["#1f77b4","#2ca02c","#d62728"]) //Aquí se definen los colores para el gráfico
+
+	        var svg = d3.select('#chart')
+	          .append('svg')
+	          .attr('width', width)
+	          .attr('height', height)
+	          .append('g')
+	          .attr('transform', 'translate(' + (width / 2) +
+	            ',' + (height / 2) + ')');
+
+	        var arc = d3.arc()
+	          .innerRadius(radius - donutWidth)
+	          .outerRadius(radius);
+
+	        var pie = d3.pie()
+	          .value(function(d) { return d.count; })
+	          .sort(null);
+
+	        var tooltip = d3.select('#chart')                                
+	          .append('div')                                                 
+	          .attr('class', 'tooltip');                                     
+
+	        tooltip.append('div')                                            
+	          .attr('class', 'label');                                       
+
+	        tooltip.append('div')                                            
+	          .attr('class', 'count');                                       
+
+	        tooltip.append('div')                                            
+	          .attr('class', 'percent');  
+
+	          var path = svg.selectAll('path')
+	            .data(pie(torta))
+	            .enter()
+	            .append('path')
+	            .attr('d', arc)
+	            .attr('fill', function(d, i) {
+	              return color(d.data.label);
+	            });
+
+	          path.on('mouseover', function(d) {                              
+	            var total = d3.sum(torta.map(function(d) {                 
+	              return d.count;                                            
+	            }));                                                         
+	            var percent = Math.round(1000 * d.data.count / total) / 10;  
+	            tooltip.select('.label').html(d.data.label);                 
+	            tooltip.select('.count').html('tweets: '+d.data.count);                 
+	            tooltip.select('.percent').html(percent + '%');              
+	            tooltip.style('display', 'block');                           
+	          });                                                            
+
+	          path.on('mouseout', function() {                               
+	            tooltip.style('display', 'none');                            
+	          });                                                            
+
+	         
+	          path.on('mousemove', function(d) {                             // esta funcion hace que el cuadro de texto se mueva en conjunto con el mouse sobre el grafico
+	            tooltip.style('top', (d3.event.layerY + 10) + 'px')         
+	              .style('left', (d3.event.layerX + 10) + 'px');             
+	          });                                                            
+	          
+
+	          var legend = svg.selectAll('.legend')                         // deja la leyenda en el medio
+	            .data(color.domain())
+	            .enter()
+	            .append('g')
+	            .attr('class', 'legend')
+	            .attr('transform', function(d, i) {
+	              var height = legendRectSize + legendSpacing;
+	              var offset =  height * color.domain().length / 2;
+	              var horz = -2 * legendRectSize;
+	              var vert = i * height - offset;
+	              return 'translate(' + horz + ',' + vert + ')';
+	            });
+
+	          legend.append('rect')
+	            .attr('width', legendRectSize)
+	            .attr('height', legendRectSize)
+	            .style('fill', color)
+	            .style('stroke', color);
+
+	          legend.append('text')
+	            .attr('x', legendRectSize + legendSpacing)
+	            .attr('y', legendRectSize - legendSpacing)
+	            .text(function(d) { return d; });
+
+	        ;
+			
+	      })(window.d3);
+	}}}]);	

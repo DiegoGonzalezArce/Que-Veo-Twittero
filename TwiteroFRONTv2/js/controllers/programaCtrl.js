@@ -1,27 +1,26 @@
 angular.module('mainModule')
 	.controller('programaCtrl', function($scope, programsService, $location, $routeParams){
-		$scope.programas = [];
-		//$scope.prueba = $location.absUrl().slice(-1); //obtener el ultimo elemento -> pasarselo al scope???
+		$scope.programa = [];
 		$scope.prueba = $routeParams.programaId;
-		function getProgramas(){
-			programsService.getPrograms()
+		function getPrograma(id){
+			programsService.getProgram(id)
 			.success(function(data){
-				$scope.programas = data;
+				$scope.programa = data;
 			})
 			.error(function(error){
 				$scope.message = "FAIL";
 
 			});
 		}
-		getProgramas();
+		getPrograma($scope.prueba);
 
+		//Aqui deberia transformar para graficos
 
-		//Llamo al servicio
-		//$scope.programaId = $scope.programas[programaId].programaId;
-		//this.programaId = $scope.programaId;
+		var torta = [
+			{"label": "Neutrales", "count": 123},
+			{"label": "Positivas", "count": 100},
+			{"label": "Negativas", "count": 23},
+			];
 
-		console.log($scope);
-
-
-
+		console.log(torta);
 	});

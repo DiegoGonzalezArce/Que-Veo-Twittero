@@ -26,6 +26,18 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: 'views/Programas.html',
 		controller: 'programaCtrl'
 	})
+	.when('/:name', {
+		templateUrl: 'views/administrador.html',
+		controller: 'adminCtrl'
+	})
+	.when('/:name/agregar', {
+		templateUrl: 'views/agregar.html',
+		controller: 'agregarCtrl'
+	})
+	.when('/:name/modificar', {
+		templateUrl: 'views/modificar.html',
+		controller: 'modificarCtrl'
+	})
 	.otherwise({
 		redirectTo: '/home'
 	});
