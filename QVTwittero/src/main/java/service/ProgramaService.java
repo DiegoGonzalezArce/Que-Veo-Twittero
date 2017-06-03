@@ -204,6 +204,8 @@ public class ProgramaService {
         
         for(Programa program : programs){
             program.setMenciones(mencionesPrograma(program.getProgramaId()));
+            program.setMencionesPositivas(positivosPrograma(program.getProgramaId()));
+            program.setMencionesNegativas(negativosPrograma(program.getProgramaId()));
             programaFacadeEJB.edit(program);
         }
         return "logrado";
@@ -241,3 +243,6 @@ public class ProgramaService {
         
     }
 }
+
+
+
