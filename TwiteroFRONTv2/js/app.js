@@ -22,6 +22,10 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: 'views/categoria.html',
 		controller: 'categoriasCtrl'
 	})
+	.when('/login', {
+		templateUrl: 'views/login.html',
+		controller: 'loginCtrl'
+	})
 	.when('/programa/:programaId', {
 		templateUrl: 'views/Programas.html',
 		controller: 'programaCtrl'

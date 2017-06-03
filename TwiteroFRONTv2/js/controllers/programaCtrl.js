@@ -16,11 +16,9 @@ angular.module('mainModule')
 
 		//Aqui deberia transformar para graficos
 
-		var torta = [
-			{"label": "Neutrales", "count": 123},
-			{"label": "Positivas", "count": 100},
-			{"label": "Negativas", "count": 23},
-			];
 
-		console.log(torta);
+		console.log($scope.programa[0]);
+
+		//var json = JSON.parse($scope.programa);
+
 	});

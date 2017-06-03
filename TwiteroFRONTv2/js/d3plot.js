@@ -156,9 +156,9 @@ angular.module('mainModule')
 	        'use strict';
 	          
 	        var torta = [
-			{"label": "Neutrales", "count": 12 },
-			{"label": "Positivas", "count": 100},
-			{"label": "Negativas", "count": 23}
+			{"label": "Neutrales", "count": 2040-516 },
+			{"label": "Positivas", "count": 450},
+			{"label": "Negativas", "count": 66}
 			];
 
 	        
@@ -208,13 +208,14 @@ angular.module('mainModule')
 	              return color(d.data.label);
 	            });
 
+	          //Creo que al matar el json, muere el evento. INTENTAR ARREGLAR
 	          path.on('mouseover', function(d) {                              
 	            var total = d3.sum(torta.map(function(d) {                 
 	              return d.count;                                            
 	            }));                                                         
-	            var percent = Math.round(1000 * d.data.count / total) / 10;  
-	            tooltip.select('.label').html(d.data.label);                 
-	            tooltip.select('.count').html('tweets: '+d.data.count);                 
+	            var percent = Math.round(1000 * d.count / total) / 10;  
+	            tooltip.select('.label').html(d.label);                 
+	            tooltip.select('.count').html('tweets: '+d.count);                 
 	            tooltip.select('.percent').html(percent + '%');              
 	            tooltip.style('display', 'block');                           
 	          });                                                            
