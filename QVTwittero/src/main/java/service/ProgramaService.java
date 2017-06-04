@@ -155,14 +155,12 @@ public class ProgramaService {
         }
         return resultado;
     }
-
     @GET
     @Path("/menciones/{id}")
     @Consumes({"application/xml", "application/json"})
     public int mP(@PathParam("id") Integer id) {
         return mencionesPrograma(id);
     }
-
     private int mencionesPrograma(int idPrograma) {
         int resultado = 0;
         List<Tweet> tweets = tweetsPrograma(idPrograma);
@@ -171,6 +169,26 @@ public class ProgramaService {
         }
         for (Tweet tweet : tweets) {
             resultado = resultado + tweet.getMenciones();
+        }
+        return resultado;
+    }
+
+    @GET
+    @Path("/tweetMencionado/{id}")
+    @Consumes({"application/xml", "application/json"})
+    public Tweet tM(@PathParam("id") Integer id) {
+        return tweetMencionado(id);
+    }
+
+    private Tweet tweetMencionado(int idPrograma) {
+        Tweet resultado = null;
+        List<Tweet> tweets = tweetsPrograma(idPrograma);
+        if (tweets.isEmpty()) {
+            return resultado;
+        }
+        for (Tweet tweet : tweets) {
+            if(resultado==null)resultado = tweet;
+            if(tweet.getMenciones()>resultado.getMenciones())resultado = tweet;
         }
         return resultado;
     }

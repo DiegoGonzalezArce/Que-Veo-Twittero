@@ -185,21 +185,23 @@ public class TweetService {
         }
         for (Tweet tweet : tweets) {
             long id = tweet.getId_Tweet();
-            try {
-                tweet.setMenciones(conexion.getMencionesbyID(id));
+            if(tweet.getMenciones()==0){
                 try {
-                    TweetFacadeEJB.edit(tweet);
-                } catch (EJBException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            } catch (TwitterException te) {
-                tweet.setMenciones(1);
-                try {
-                    TweetFacadeEJB.edit(tweet);
-                } catch (EJBException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    tweet.setMenciones(conexion.getMencionesbyID(id));
+                    try {
+                        TweetFacadeEJB.edit(tweet);
+                    } catch (EJBException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                } catch (TwitterException te) {
+                    tweet.setMenciones(1);
+                    try {
+                        TweetFacadeEJB.edit(tweet);
+                    } catch (EJBException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             }
 
