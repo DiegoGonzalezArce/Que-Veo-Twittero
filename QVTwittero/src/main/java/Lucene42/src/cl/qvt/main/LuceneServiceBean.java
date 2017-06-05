@@ -46,7 +46,6 @@ public class LuceneServiceBean {
                         Vector tweetsOut = tweetParser.parsearArchivoOut(ARCHIVO_OUT);
                         TweetIndexer tweetIndex = new TweetIndexer(dirPostsIndex);			
 			tweetIndex.fillIndexTweets(tweetsOut);
-			tweetIndex.closeIndex();
 			done=true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

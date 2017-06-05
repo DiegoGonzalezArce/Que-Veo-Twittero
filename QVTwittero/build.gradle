@@ -23,6 +23,8 @@ dependencies {
     compile "org.apache.lucene:lucene-queryparser:4.2.0"
     compile "org.apache.lucene:lucene-queries:4.2.0"
     compile "org.twitter4j:twitter4j-core:4.0.5"
+    compile "org.neo4j:neo4j:3.0.0"
+    compile "org.neo4j.driver:neo4j-java-driver:1.0.6"
 
 
 

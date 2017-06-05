@@ -45,10 +45,10 @@ public class TweetSearcher {
      */
     public List<ScoreDoc> search(IndexReader reader,String Term,String label,int maxHits) throws IOException, ParseException{
         String[] args = null;
-        StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_42);
-        Query q = new QueryParser(Version.LUCENE_42, label, analyzer).parse(Term);
+        StandardAnalyzer analyzer = new StandardAnalyzer();
+        Query q = new QueryParser(label, analyzer).parse(Term);
         IndexSearcher searcher = new IndexSearcher(reader);
-        TopScoreDocCollector collector = TopScoreDocCollector.create(maxHits, true);
+        TopScoreDocCollector collector = TopScoreDocCollector.create(maxHits);
         BooleanQuery a=new BooleanQuery();
         a.add(q, BooleanClause.Occur.MUST);
         searcher.search(a, collector);
@@ -81,13 +81,13 @@ public class TweetSearcher {
      */
     public List<ScoreDoc> search(IndexReader reader,List<String> Term,String label,int maxHits) throws IOException, ParseException{
         String[] args = null;
-        StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_42);
+        StandardAnalyzer analyzer = new StandardAnalyzer();
         IndexSearcher searcher = new IndexSearcher(reader);
-        TopScoreDocCollector collector = TopScoreDocCollector.create(maxHits, true);
+        TopScoreDocCollector collector = TopScoreDocCollector.create(maxHits);
         BooleanQuery a=new BooleanQuery();
         for (Iterator iter = Term.iterator(); iter.hasNext();) {
             String elem = (String) iter.next();
-            Query q=new QueryParser(Version.LUCENE_42, label, analyzer).parse(elem);
+            Query q=new QueryParser( label, analyzer).parse(elem);
             a.add(q, BooleanClause.Occur.MUST);
         }
         searcher.search(a, collector);

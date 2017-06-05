@@ -14,10 +14,13 @@ package Lucene42.src.cl.qvt.indexer;
 import Lucene42.src.cl.qvt.structure.Tweets;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
+import javax.inject.Singleton;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
@@ -46,23 +49,28 @@ import org.apache.lucene.util.Version;
  * clase java que crea el index para la posterior busqueda
 */
 public class TweetIndexer{
-        IndexWriter indexWriter;   
+        IndexWriter indexWriter;  
+        FSDirectory open;
         public TweetIndexer(String directorio) throws IOException{
-		File indexDir = new File(directorio);
+		Path indexDir = Paths.get(directorio);
+                open = FSDirectory.open(indexDir);
 		Map<String,Analyzer> analyzerPerField = new HashMap<String,Analyzer>();
-		analyzerPerField.put("tweet", new EnglishAnalyzer(Version.LUCENE_42));	
-		PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new EnglishAnalyzer(Version.LUCENE_42), analyzerPerField);			
-	        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_42, analyzer);
-		indexWriter = new IndexWriter(FSDirectory.open(indexDir), config);
+		analyzerPerField.put("tweet", new EnglishAnalyzer());	
+		PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new EnglishAnalyzer(), analyzerPerField);			
+	        IndexWriterConfig config = new IndexWriterConfig(analyzer);
+		indexWriter = new IndexWriter(open, config);
 	}
         public void fillIndexTweets(Vector tweets) throws IOException{
+            int i=0;
             for(Iterator iter = tweets.iterator(); iter.hasNext();){
 	        Tweets retrievedTweet = (Tweets) iter.next();
-                addDocumentRetrievedTweet(retrievedTweet);
+                i++;
+		indexWriter.addDocument(documentRetrievedTweet(retrievedTweet));       
 	    }
+            closeIndex();
         }
-        private void addDocumentRetrievedTweet(Tweets retrievedTweet) throws CorruptIndexException, IOException {
-			
+        
+        private Document documentRetrievedTweet(Tweets retrievedTweet) throws CorruptIndexException, IOException {
 			Document docRetrievedTweet  = new Document();
 			docRetrievedTweet.add(new StringField("_id", retrievedTweet._id, Field.Store.YES));			
 			docRetrievedTweet.add(new StringField("id", retrievedTweet.id, Field.Store.YES));					
@@ -81,15 +89,17 @@ public class TweetIndexer{
 			 * 
 			 * REVISAR OTROS Field (para campos numericos)
 			 */
-
-			indexWriter.addDocument(docRetrievedTweet);
+                        return docRetrievedTweet;
 			// TODO Auto-generated method stub
 			
 			
 		}
         public void closeIndex() throws IOException{
 			//indexWriter.optimize();//deprecated
-			indexWriter.close();	
+                        indexWriter.flush();
+                        indexWriter.deleteUnusedFiles();
+			indexWriter.close();
+                        System.out.println("cerrado");
 		}
 }
 

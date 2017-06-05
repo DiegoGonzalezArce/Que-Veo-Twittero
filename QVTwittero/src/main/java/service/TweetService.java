@@ -13,6 +13,7 @@ import facade.TweetFacade;
 import facade.Tweet_KeywordFacade;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -75,8 +76,8 @@ public class TweetService {
     @Path("/luceneupdate")
     public String index() throws IOException, ParseException {
         LuceneServiceBean sr = new LuceneServiceBean();
-        sr.updateIndex();
-        return "logrado";
+        if(sr.updateIndex())return "logrado";
+        return "fracaso";
     }
 
     @GET
@@ -85,7 +86,7 @@ public class TweetService {
         String result = "";
         String[] temp = keyword.split(" ");
         TweetSearcher ts = new TweetSearcher();
-        Directory index = FSDirectory.open(new File("QVT/Index"));
+        Directory index = FSDirectory.open(Paths.get("QVT/Index"));
         IndexReader reader = DirectoryReader.open(index);
         //String input= "master";
         List<String> input = new ArrayList<String>();
@@ -113,7 +114,7 @@ public class TweetService {
         String result = "";
         String[] temp = keyword.split(" ");
         TweetSearcher ts = new TweetSearcher();
-        Directory index = FSDirectory.open(new File("QVT/Index"));
+        Directory index = FSDirectory.open(Paths.get("QVT/Index"));
         IndexReader reader = DirectoryReader.open(index);
         //String input= "master";
         List<String> input = new ArrayList<String>();
