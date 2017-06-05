@@ -13,4 +13,8 @@ angular.module('mainModule')
 		this.getProgram= function(id){
 			return $http.get('http://localhost:8080/QVTwittero/programas/'+id);
 		};
+
+		this.getTweet = function(id){
+			return $http.get('http://localhost:8080/QVTwittero/programas/tweetMencionado/'+id);
+		}
 	});
