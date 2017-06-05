@@ -1,5 +1,5 @@
 angular.module('mainModule')
-	.controller('modificarCtrl', function($scope, programsService){
+	.controller('modificarCtrl', function($scope, $window, programsService){
 		$scope.programas = [];
 		function getProgramas(){
 			programsService.getPrograms()
@@ -13,6 +13,8 @@ angular.module('mainModule')
 		}
 		getProgramas();
 
-		console.log("MATENME");
+		$scope.doalert = function(){
+			$window.alert("¡Programa Modificado!");
+		};
 		console.log($scope);
 	});
