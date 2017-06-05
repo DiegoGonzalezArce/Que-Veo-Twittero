@@ -1,7 +1,5 @@
 
 
-    
-
             <div class="featured-heading">
                     <div class="container">
                         <ul class="grid effect-8" id="grid">
@@ -16,7 +14,7 @@
                         <div class="row-fluid" >
                             <ul class="grid effect-3" id="grid">
                                 <li class="span6">
-                                    <div class="block" ng-model="">
+                                    <div class="block" style="display: inline-block;" ng-model="">
                                      <h1>Nombre : </h1> <p> {{programa.nombre}}</p>
                                      <h1>Canal : </h1> <p> {{programa.canalId}} </p>
                                      <h1>Descripción : </h1> <p> {{programa.descripcion}}</p>
@@ -29,9 +27,20 @@
                                         <d3-programa>
                                                 <div id="chart"></div>
                                         </d3-programa>
-                                        
+                                    <div class="block">
+                                        <div style="float: left; width: 25%;">
+                                            <h5>Menciones:<h5> <p>{{programa.menciones}}</p>
+                                        </div>
+                                        <div style="float: right; width: 30%;">
+                                            <h5>Menciones Negativas</h5> <p>{{programa.mencionesNegativas}}</p>
+                                        </div>
+                                        <div style="display: inline-block; width: 25%;">
+                                            <h5>Menciones Positivas:</h5> <p>{{programa.mencionesPositivas}}</p>
+                                        </div>
+                                    </div>    
 
                                     </div>
+                                    
                                  </li>
                                 
                             </ul>

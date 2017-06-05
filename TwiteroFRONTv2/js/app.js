@@ -30,15 +30,15 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: 'views/Programas.html',
 		controller: 'programaCtrl'
 	})
-	.when('/:name', {
+	.when('/benjamin/admin', {
 		templateUrl: 'views/administrador.html',
 		controller: 'adminCtrl'
 	})
-	.when('/:name/agregar', {
+	.when('/benjamin/agregar', {
 		templateUrl: 'views/agregar.html',
 		controller: 'agregarCtrl'
 	})
-	.when('/:name/modificar', {
+	.when('/benjamin/modificar', {
 		templateUrl: 'views/modificar.html',
 		controller: 'modificarCtrl'
 	})

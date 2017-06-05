@@ -11,41 +11,22 @@
 							  <div class="span12">
 							  <h1 class="span12" for="programaID">Elija el programa a modificar:</h1>  
 							  <select id="selectbasic" name="selectbasic" class="form-control">
-							      <option value="1">1</option>
-							      <option value="2">2</option>
-							      <option value="1">3</option>
-							      <option value="2">4</option>
+							      <option ng-repeat="x in programas" value="{{x.nombre}}">{{x.nombre}}</option>
+							      
 							    </select>
 							    </div>
 							</div>
 					</div>
 					<br><br><br>
 					<div class="hh-divider"></div>
-                        <div class="form-group">
-                        
-							 <div class="user-info">
+                        	 <div class="user-info">
 						  <div class="span4">
 						  <h1 class="span4" for="nombre">Nombre:</h1>  
-						  <input id="nombre" name="textinput" type="text" placeholder="Smith" class="form-control input-md" required="">
+						  <input id="nombre" name="textinput" type="text" placeholder="Nuevo nombre del programa." class="form-control input-md" required="">
 						    </div>
 						  </div>
 						</div>
-						<div class="form-group">
-							 <div class="user-info">
-						  <div class="span4">
-						  <h1 class="span4" for="programaID">ProgramaId:</h1>  
-						  <input id="programaId" name="textinput" type="text" placeholder="Smith" class="form-control input-md" required="">
-						    </div>
-						  </div>
-						</div>
-						<div class="form-group">
-							 <div class="user-info">
-						  <div class="span4">
-						  <h1 class="span4" for="usuarioID">Usuario Id:</h1>  
-						  <input id="usuarioID" name="textinput" type="text" placeholder="Smith" class="form-control input-md" required="" size="">
-						    </div>
-						  </div>
-						</div>
+						
 						<div class="span12"><br></div>
 						<div class="form-group">
 							 <div class="user-info">
@@ -60,7 +41,7 @@
 						  		 <div class="span3">
 						  <h1 class="span3" for="hora">Hr:</h1>  
 						
-						  <input id="Min" name="textinput" type="text" placeholder="Smith" class="form-control input-md" required="">
+						  <input id="Min" name="textinput" type="number" min="0" max="24" placeholder="" class="form-control input-md" required="">
 						    </div>
 						    </div>
 						    </div>
@@ -68,26 +49,13 @@
 							 <div class="user-info">
 						  		 <div class="span3">
 						  <h1 class="span3" for="Min">Min:</h1>  
-						  <input id="Min" name="textinput" type="text" placeholder="Smith" class="form-control input-md" required="">
+						  <input id="Min" name="textinput" type="number" min="0" max="60" placeholder="" class="form-control input-md" required="">
 						    </div>
 						    </div>
 						    </div>
 							  
 
 
-							<div class="form-group">
-								<div class="user-info">
-								<div class="span5">
-						  <h1 class="span5">Canal Id:</h1>
-						    <select id="selectbasic" name="selectbasic" class="form-control">
-						      <option value="1">1</option>
-						      <option value="2">2</option>
-						      <option value="1">3</option>
-						      <option value="2">4</option>
-						    </select>
-						  </div>
-						  </div>
-						</div>
 				        						  
 						<div class="span12"><br></div>
 
@@ -105,7 +73,7 @@
 							 <div class="user-info">
 						  		 <div class="span3">
 						  <h1 class="span3" for="horaT">Hr:</h1>  
-						  <input id="horaT" name="textinput" type="text" placeholder="Smith" class="form-control input-md" required="">
+						  <input id="horaT" name="textinput" type="number" min="0" max="24" placeholder="" class="form-control input-md" required="">
 						    </div>
 						    </div>
 						    </div>
@@ -113,11 +81,11 @@
 							 <div class="user-info">
 						  		 <div class="span3">
 						  <h1 class="span3" for="MinT">Min:</h1>  
-						  <input id="MinT" name="textinput" type="text" placeholder="Smith" class="form-control input-md" required="">
+						  <input id="MinT" name="textinput" type="number" min="0" max="60" placeholder="" class="form-control input-md" required="">
 						    </div>
 						    </div>
 						    </div>
-							
+							<br><br><br>
 							<div class="form-group">
 							 <div class="user-info">
 						  <div class="span2">
@@ -149,6 +117,7 @@
 						  </div>
 					    </div>
 					</div>
+
 					<div class="span2">
 						<a href="#myModal" role="button" class="btn" data-toggle="modal">Modificar Programa</a>
 					</div>
