@@ -9,6 +9,13 @@
  */
 package service;
 
+import org.neo4j.driver.v1.AuthTokens;
+import org.neo4j.driver.v1.Driver;
+import org.neo4j.driver.v1.GraphDatabase;
+import org.neo4j.driver.v1.Record;
+import org.neo4j.driver.v1.Session;
+import org.neo4j.driver.v1.StatementResult;
+
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -257,6 +264,41 @@ public class ProgramaService {
             program.setMencionesNegativas(negativosPrograma(program.getProgramaId()));
             programaFacadeEJB.edit(program);
         }
+        return "logrado";
+        
+    }
+    @GET
+    @Path("/neo4jupdate")
+    public String poblarNeo4j(){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        session.run("match (a)-[r]->(b) delete r");
+        session.run("match (n) delete n");
+        List<String> usuarios = TweetFacadeEJB.findUsers();
+        for(String user : usuarios){
+            user=user.replaceAll("[^\\dA-Za-z ]", "");
+            session.run( "CREATE (a:User {username:'"+user+"'})");
+        }
+        List<Programa> programs = programaFacadeEJB.findAll();
+        if(programs.isEmpty()){
+            return "error";
+        }
+        for(Programa program : programs){
+            String nombre=program.getNombre().replaceAll("[^\\dA-Za-z ]", "");
+            session.run( "CREATE (a:Programa {nombre:'"+nombre+"'})");
+            for(Tweet tweet : tweetsPrograma(program.getProgramaId())){
+                int menciones=tweet.getMenciones();
+                String comentario=tweet.getComment().replaceAll("[^\\dA-Za-z ]", "");
+                String usuario=tweet.getUsername().replaceAll("[^\\dA-Za-z ]", "");
+                session.run( "CREATE (a:Tweet {tweet:'"+comentario+"', menciones:'"+menciones+"'})");
+                session.run("match (a:User) where a.username='"+usuario+"' "
+                + "  match (b:Programa) where b.nombre='"+nombre+"' "
+                + "  create (a)-[r:opino_sobre]->(b)");
+            }
+        }
+        
+        session.close();
+        driver.close();
         return "logrado";
         
     }

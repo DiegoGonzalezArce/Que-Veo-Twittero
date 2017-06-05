@@ -28,6 +28,8 @@ public interface TweetFacade {
     public List<Tweet> findAll();
 
     public List<Tweet> findRange(int[] range);
+    
+    public List<String> findUsers();
 
     public int count();
 }
