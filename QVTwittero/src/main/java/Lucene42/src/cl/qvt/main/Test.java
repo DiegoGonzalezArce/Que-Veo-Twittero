@@ -20,6 +20,7 @@ import org.apache.lucene.queryparser.flexible.core.util.StringUtils;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import service.ProgramaService;
 import twitter.TwitterConnection;
 import twitter4j.TwitterException;
 
@@ -45,7 +46,7 @@ public class Test{
             long id=Long.parseLong("867184045872095232");
             System.out.println(conexion.getMencionesbyID(id));         
             */
-            LuceneServiceBean sr = new LuceneServiceBean();
+            /*LuceneServiceBean sr = new LuceneServiceBean();
             sr.updateIndex();
             TwitterConnection tc = new TwitterConnection();
         List<Tweet> entity = new ArrayList<Tweet>();
@@ -80,6 +81,11 @@ public class Test{
             
         }
             System.out.println(entity);
+
+            ProgramaService ps=new ProgramaService();
+            System.out.println(ps.getTweetsNeo4j());
+            */
         }
+            
 }
 

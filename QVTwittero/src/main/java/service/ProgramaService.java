@@ -42,6 +42,10 @@ import facade.Programa_KeywordFacade;
 import facade.TweetFacade;
 import facade.Tweet_KeywordFacade;
 import java.util.Iterator;
+import model.Link;
+import model.Links;
+import model.Node;
+import model.Nodes;
 import model.Programa_Keyword;
 import model.Tweet;
 import model.Tweet_Keyword;
@@ -267,6 +271,180 @@ public class ProgramaService {
         return "logrado";
         
     }
+    /*
+    @GET
+    @Path("/neo4jProgramas")
+    @Consumes({"application/xml", "application/json"})
+    public List<List<String>> getProgramasNeo4j(){
+        return decodeResult(getNodoNeo4j("Programa"),"nombre");
+    }
+    @GET
+    @Path("/neo4jProgramas/{name}")
+    @Consumes({"application/xml", "application/json"})
+    public StatementResult getProgramasNeo4j(@PathParam("name") String name){
+        return getNodoNeo4j("Programa","nombre",name);
+    }
+    @GET
+    @Path("/neo4jUsuarios")
+    @Consumes({"application/xml", "application/json"})
+    public StatementResult getUsuariosNeo4j(){
+        return getNodoNeo4j("User");
+    }
+    @GET
+    @Path("/neo4jUsuarios/{name}")
+    @Consumes({"application/xml", "application/json"})
+    public StatementResult getUsuariosNeo4j(@PathParam("name") String name){
+        return getNodoNeo4j("User","username",name);
+    }
+    @GET
+    @Path("/neo4jTweets")
+    @Consumes({"application/xml", "application/json"})
+    public List<List<String>> getTweetsNeo4j(){
+        return decodeResult(getRelacionNeo4j("Tweets"),"tweet");
+    }
+    @GET
+    @Path("/neo4jTweets1/{programa}")
+    @Consumes({"application/xml", "application/json"})
+    public StatementResult getTweets1Neo4j(@PathParam("programa") String programa){
+        return getRelacionNeo4j("Tweets","Programa","nombre",programa);
+    }
+    @GET
+    @Path("/neo4jTweets2/{programa}")
+    @Consumes({"application/xml", "application/json"})
+    public StatementResult getTweets2Neo4j(@PathParam("programa") String programa){
+        return getRelacionNeo4j("Tweets","nombre",programa);
+    }
+    */
+    private List<List<String>> decodeResult(StatementResult result,String label){
+        List<List<String>> list=new ArrayList<List<String>>();
+        while ( result.hasNext() )
+        {
+            List<String> strings=new ArrayList<String>();
+            Record record = result.next();
+            System.out.println(record.get(0).asPath());
+            System.out.println(record.get(0).asPath().start().get(label));
+            System.out.println(record.get(0).asPath().end().asMap());
+            System.out.println(record.get(0).asPath().relationships().iterator().next().asMap());
+            /*strings.add(record.get(0).asNode().get(label).asString());
+            list.add(strings);*/
+        }
+        return list;
+    }
+    @GET
+    @Path("/neo4jnodes")
+    @Consumes({"application/xml", "application/json"})
+    public Nodes nodes(){
+        return decodeNodes();
+    }
+    @GET
+    @Path("/neo4jlinks")
+    @Consumes({"application/xml", "application/json"})
+    public Links links(){
+        return decodeLinks();
+    }
+    private Nodes decodeNodes(){
+        StatementResult result=getNodoNeo4j("Programa");
+        List<Node> nodos=new ArrayList<Node>();
+        while ( result.hasNext() )
+        {
+            Record record = result.next();
+            Node nodo=new Node(record.get(0).asNode().get("nombre").asString(),1);
+            nodos.add(nodo);
+        }
+        result=getNodoNeo4j("User");
+        while ( result.hasNext() )
+        {
+            Record record = result.next();
+            Node nodo=new Node(record.get(0).asNode().get("username").asString(),2);
+            nodos.add(nodo);
+        }
+        Nodes nodes=new Nodes(nodos);
+        return nodes;
+    }
+    private Links decodeLinks(){
+        StatementResult result=getRelacionNeo4j("Tweets");
+        List<Link> links=new ArrayList<Link>();
+        while ( result.hasNext() )
+        {
+            Record record = result.next();
+            Link link=new Link(record.get(0).asPath().end().get("nombre").asString(),record.get(0).asPath().start().get("username").asString(),record.get(0).asPath().relationships().iterator().next().get("analisis").asString());
+            links.add(link);
+        }
+        Links results=new Links(links);
+        return results;
+    }
+    private StatementResult getNodosNeo4j(){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH (n) RETURN n");
+        session.close();
+        driver.close();
+        return result;
+    }
+    private StatementResult getRelacionesNeo4j(){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH p=()-->() RETURN p");
+        session.close();
+        driver.close();
+        return result;
+    }
+    private StatementResult getNodoNeo4j(String nodo){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH (n:"+nodo+") RETURN n");
+        session.close();
+        driver.close();
+        return result;
+    }
+    private StatementResult getNodoNeo4j(String nodo,String label,String value){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH (n:"+nodo+") WHERE n."+label+"="+value+" RETURN n");
+        session.close();
+        driver.close();
+        return result;
+    }
+    private StatementResult getRelacionNeo4j(String relacion,String nodo1,String label1,String value1){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH p=()-[r:"+relacion+"]->(b:"+nodo1+") WHERE b."+label1+"="+value1+" RETURN p");
+        session.close();
+        driver.close();
+        return result;
+    }
+    private StatementResult getRelacionNeo4j(String relacion,String label1,String value1){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH p=(a)-[r:"+relacion+"]->(b) WHERE b."+label1+"="+value1+" RETURN p");
+        session.close();
+        driver.close();
+        return result;
+    }
+    private StatementResult getRelacionNeo4j(String relacion,String nodo1,String nodo2,String label1,String value1,String label2,String value2){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH p=(a"+nodo2+")-[r:"+relacion+"]->(b"+nodo1+") WHERE a."+label1+"="+value1+" AND b."+label2+"="+value2+"  RETURN p");
+        session.close();
+        driver.close();
+        return result;
+    }
+    private StatementResult getRelacionNeo4j(String relacion,String label1,String value1,String label2,String value2){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH p=(a)-[r:"+relacion+"]->(b) WHERE a."+label1+"="+value1+" AND b."+label2+"="+value2+"  RETURN p");
+        session.close();
+        driver.close();
+        return result;
+    }
+    private StatementResult getRelacionNeo4j(String relacion){
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
+        Session session = driver.session();
+        StatementResult result=session.run("MATCH p=()-[r:"+relacion+"]->() RETURN p");
+        session.close();
+        driver.close();
+        return result;
+    }
     @GET
     @Path("/neo4jupdate")
     public String poblarNeo4j(){
@@ -276,7 +454,7 @@ public class ProgramaService {
         session.run("match (n) delete n");
         List<String> usuarios = TweetFacadeEJB.findUsers();
         for(String user : usuarios){
-            user=user.replaceAll("[^\\dA-Za-z ]", "");
+            user=user.replaceAll("[^A-Za-z0-9.\\-\\_\\+\\# ]", "");
             session.run( "CREATE (a:User {username:'"+user+"'})");
         }
         List<Programa> programs = programaFacadeEJB.findAll();
@@ -284,16 +462,27 @@ public class ProgramaService {
             return "error";
         }
         for(Programa program : programs){
-            String nombre=program.getNombre().replaceAll("[^\\dA-Za-z ]", "");
+            String nombre=program.getNombre().replaceAll("[^A-Za-z0-9.\\-\\_\\+\\# ]", "");
             session.run( "CREATE (a:Programa {nombre:'"+nombre+"'})");
             for(Tweet tweet : tweetsPrograma(program.getProgramaId())){
                 int menciones=tweet.getMenciones();
-                String comentario=tweet.getComment().replaceAll("[^\\dA-Za-z ]", "");
-                String usuario=tweet.getUsername().replaceAll("[^\\dA-Za-z ]", "");
-                session.run( "CREATE (a:Tweet {tweet:'"+comentario+"', menciones:'"+menciones+"'})");
+                int analisis=tweet.getAnalisis();
+                String comentario=tweet.getComment().replaceAll("[^A-Za-z0-9.\\-\\_\\+\\# ]", "");
+                String usuario=tweet.getUsername().replaceAll("[^A-Za-z0-9.\\-\\_\\+\\# ]", "");
                 session.run("match (a:User) where a.username='"+usuario+"' "
                 + "  match (b:Programa) where b.nombre='"+nombre+"' "
-                + "  create (a)-[r:opino_sobre]->(b)");
+                + "  create (a)-[r:Tweets{tweet:'"+comentario+"', menciones:'"+menciones+"', analisis:'"+analisis+"'}]->(b)");
+                if(tweet.getAnalisis()<0)session.run("match (a:User) where a.username='"+usuario+"' "
+                + "  match (b:Programa) where b.nombre='"+nombre+"' "
+                + "  create (a)-[r:TweetNegativo{tweet:'"+comentario+"', menciones:'"+menciones+"'}]->(b)");
+                else{
+                    if(tweet.getAnalisis()==0)session.run("match (a:User) where a.username='"+usuario+"' "
+                + "  match (b:Programa) where b.nombre='"+nombre+"' "
+                + "  create (a)-[r:TweetNeutral{tweet:'"+comentario+"', menciones:'"+menciones+"'}]->(b)");
+                    else session.run("match (a:User) where a.username='"+usuario+"' "
+                + "  match (b:Programa) where b.nombre='"+nombre+"' "
+                + "  create (a)-[r:TweetPositivo{tweet:'"+comentario+"', menciones:'"+menciones+"'}]->(b)");
+                }
             }
         }
         
