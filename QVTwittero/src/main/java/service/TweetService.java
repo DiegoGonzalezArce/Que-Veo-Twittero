@@ -209,6 +209,39 @@ public class TweetService {
         }
         return "logrado";
     }
+    @GET
+    @Path("/update2")
+    public String update2() throws IOException, ParseException, TwitterException {
+        List<Tweet> tweets = TweetFacadeEJB.findAll();
+        TwitterConnection conexion = new TwitterConnection();
+        if (tweets.isEmpty()) {
+            return "error";
+        }
+        for (Tweet tweet : tweets) {
+            long id = tweet.getId_Tweet();
+            if(tweet.getMenciones()==1){
+                try {
+                    tweet.setMenciones(conexion.getMencionesbyID(id));
+                    try {
+                        TweetFacadeEJB.edit(tweet);
+                    } catch (EJBException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                } catch (TwitterException te) {
+                    tweet.setMenciones(1);
+                    try {
+                        TweetFacadeEJB.edit(tweet);
+                    } catch (EJBException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+        return "logrado";
+    }
 
     @GET
     @Path("/mongoexport")

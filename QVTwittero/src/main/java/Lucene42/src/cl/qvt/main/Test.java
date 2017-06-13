@@ -46,12 +46,12 @@ public class Test{
             long id=Long.parseLong("867184045872095232");
             System.out.println(conexion.getMencionesbyID(id));         
             */
-            /*LuceneServiceBean sr = new LuceneServiceBean();
+            LuceneServiceBean sr = new LuceneServiceBean();
             sr.updateIndex();
-            TwitterConnection tc = new TwitterConnection();
+            //TwitterConnection tc = new TwitterConnection();
         List<Tweet> entity = new ArrayList<Tweet>();
         String result = "";
-        String keyword="master chef";
+        String keyword="mcc";
         String[] temp = keyword.split(" ");
         TweetSearcher ts = new TweetSearcher();
         Directory index = FSDirectory.open(Paths.get("QVT/Index"));
@@ -69,6 +69,7 @@ public class Test{
             Document d = searcher.doc(docId);
             Tweet tweet = new Tweet();
             System.out.println("id:" + d.get("id") + " tweet:" + d.get("tweet") + " user:" + d.get("username") + " time:" + d.get("year") + "-" + d.get("month") + "-" + d.get("day") + " " + d.get("hour") + " RTs:" + d.get("RTcount") + " Likes:" + d.get("LIKEcount") + " score:" + sr.addTweetScore(d));
+            System.out.println(Timestamp.valueOf(d.get("year") + "-" + d.get("month") + "-" + d.get("day") + " " + d.get("hour")));
             tweet.setId_Tweet(Long.valueOf(d.get("id")).longValue());
             tweet.setComment(d.get("tweet"));
             tweet.setUsername(d.get("username"));
@@ -80,8 +81,8 @@ public class Test{
             entity.add(tweet);
             
         }
-            System.out.println(entity);
-
+            System.out.println(entity.toString());
+/*
             ProgramaService ps=new ProgramaService();
             System.out.println(ps.getTweetsNeo4j());
             */
