@@ -321,10 +321,10 @@ public class ProgramaService {
         {
             List<String> strings=new ArrayList<String>();
             Record record = result.next();
-            System.out.println(record.get(0).asPath());
-            System.out.println(record.get(0).asPath().start().get(label));
-            System.out.println(record.get(0).asPath().end().asMap());
-            System.out.println(record.get(0).asPath().relationships().iterator().next().asMap());
+            //System.out.println(record.get(0).asPath());
+            //System.out.println(record.get(0).asPath().start().get(label));
+            //System.out.println(record.get(0).asPath().end().asMap());
+            //System.out.println(record.get(0).asPath().relationships().iterator().next().asMap());
             /*strings.add(record.get(0).asNode().get(label).asString());
             list.add(strings);*/
         }

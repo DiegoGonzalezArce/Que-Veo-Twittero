@@ -128,7 +128,7 @@ public class TweetService {
         for (Integer docId : a) {
             Document d = searcher.doc(docId);
             Tweet tweet = new Tweet();
-            System.out.println("id:" + d.get("id") + " tweet:" + d.get("tweet") + " user:" + d.get("username") + " time:" + d.get("year") + "-" + d.get("month") + "-" + d.get("day") + " " + d.get("hour") + " RTs:" + d.get("RTcount") + " Likes:" + d.get("LIKEcount") + " score:" + sr.addTweetScore(d));
+            //System.out.println("id:" + d.get("id") + " tweet:" + d.get("tweet") + " user:" + d.get("username") + " time:" + d.get("year") + "-" + d.get("month") + "-" + d.get("day") + " " + d.get("hour") + " RTs:" + d.get("RTcount") + " Likes:" + d.get("LIKEcount") + " score:" + sr.addTweetScore(d));
             tweet.setId_Tweet(Long.valueOf(d.get("id")).longValue());
             tweet.setComment(d.get("tweet"));
             tweet.setUsername(d.get("username"));
@@ -141,8 +141,6 @@ public class TweetService {
                 TweetFacadeEJB.create(tweet);
                 entity.add(tweet);
             } catch (EJBException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
         }
         return entity;
@@ -166,9 +164,6 @@ public class TweetService {
                     try {
                         Tweet_KeywordFacadeEJB.create(tweet_keyword);
                     } catch (EJBException e) {
-
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
                     }
                 }
             }
@@ -192,16 +187,12 @@ public class TweetService {
                     try {
                         TweetFacadeEJB.edit(tweet);
                     } catch (EJBException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
                     }
                 } catch (TwitterException te) {
                     tweet.setMenciones(1);
                     try {
                         TweetFacadeEJB.edit(tweet);
                     } catch (EJBException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
                     }
                 }
             }
@@ -225,16 +216,12 @@ public class TweetService {
                     try {
                         TweetFacadeEJB.edit(tweet);
                     } catch (EJBException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
                     }
                 } catch (TwitterException te) {
                     tweet.setMenciones(1);
                     try {
                         TweetFacadeEJB.edit(tweet);
                     } catch (EJBException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
                     }
                 }
             }

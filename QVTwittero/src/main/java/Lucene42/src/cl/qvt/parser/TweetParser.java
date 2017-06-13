@@ -58,7 +58,7 @@ public class TweetParser {
 			}
 			return vectorPosts;
 		} catch (Exception es) {
-			System.out.println("ERROR2: " + es.getMessage());
+			
 		}
 		return null;
     } 

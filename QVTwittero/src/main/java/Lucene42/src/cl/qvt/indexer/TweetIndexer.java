@@ -99,7 +99,7 @@ public class TweetIndexer{
                         indexWriter.flush();
                         indexWriter.deleteUnusedFiles();
 			indexWriter.close();
-                        System.out.println("cerrado");
+                        //System.out.println("cerrado");
 		}
 }
 
