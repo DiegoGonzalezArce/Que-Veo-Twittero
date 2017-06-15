@@ -351,3 +351,117 @@ angular.module('mainModule')
 			
 	      })(window.d3);
 	}}}]);	
+
+angular.module('mainModule')
+	.directive('d3Grafo', ["d3p", function(d3){
+		 return {
+            restrict: 'EA',
+            scope:{},
+            link: function(scope, element, attrs)
+            {
+            d3.d3().then(function(d3) {
+
+            	var width = 940;
+            	var height = 600;
+
+				var svg = d3.select(element[0])
+							.append("svg")
+							.attr("width", width)
+							.attr("height", height);
+
+				var color = d3.scaleOrdinal(["#ff8c00","#483d8b"]);//colores para nodos programa(1), twiteros(2) 
+				var colorline = d3.scaleOrdinal(["#006400","#800000","#191970"]);//colores para comentarios positivos(1) negativos(2) neutrales(3)(d.value)
+				var simulation = d3.forceSimulation()
+				    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+				    .force("charge", d3.forceManyBody())
+				    .force("center", d3.forceCenter(width / 2, height / 2));
+
+				d3.json("http://localhost:8080/QVTwittero/programas/neo4jg", function(error, graph) {
+				  if (error) throw error;
+
+				  console.log(graph);
+
+				  var g = svg.append("g")
+				  			.attr("class", "everything");
+
+				  var link = g.append("g")
+				      .attr("class", "links")
+				    .selectAll("line")
+				    .data(graph.links)
+				    .enter().append("line")
+				      .attr("stroke", verAnalisis);
+				      
+
+				  var node = g.append("g")
+				      .attr("class", "nodes")
+				    .selectAll("circle")
+				    .data(graph.nodos)
+				    .enter().append("circle").attr("stroke-width", function(d){ return (Math.pow(d.group,2));}) // Cambia el tamaño segun el grupo (los más grandes son los programas)
+				      .attr("r", 5)
+				      .attr("fill", function(d) { return color(d.group);})
+				      .call(d3.drag()
+				          .on("start", dragstarted)
+				          .on("drag", dragged)
+				          .on("end", dragended));
+
+				  node.append("title")
+				      .text(function(d) { return d.id; });
+
+				  simulation
+				      .nodes(graph.nodos)
+				      .on("tick", ticked);
+
+				  simulation.force("link")
+				      .links(graph.links);
+
+				  function ticked() {
+				    link
+				        .attr("x1", function(d) { return d.source.x; })
+				        .attr("y1", function(d) { return d.source.y; })
+				        .attr("x2", function(d) { return d.target.x; })
+				        .attr("y2", function(d) { return d.target.y; });
+
+				    node
+				        .attr("cx", function(d) { return d.x; })
+				        .attr("cy", function(d) { return d.y; });
+				  }
+
+			  		var zoom_handler = d3.zoom()
+										    .on("zoom", zoom_actions);
+										 
+					zoom_handler(svg);
+
+					function zoom_actions(){
+						    g.attr("transform", d3.event.transform)
+						}				
+
+				});
+
+				function dragstarted(d) {
+				  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+				  d.fx = d.x;
+				  d.fy = d.y;
+				}
+
+				function dragged(d) {
+				  d.fx = d3.event.x;
+				  d.fy = d3.event.y;
+				}
+
+				function dragended(d) {
+				  if (!d3.event.active) simulation.alphaTarget(0);
+				  d.fx = null;
+				  d.fy = null;
+				}
+
+				function verAnalisis(d){
+				  if(d.value > 0){
+				    return colorline(1);
+				  }
+				  else if(d.value < 0){
+				    return colorline(2);
+				  }
+				  else
+				    return colorline(3);
+				}
+			})}}}]);	

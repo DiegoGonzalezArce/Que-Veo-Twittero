@@ -30,6 +30,10 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: 'views/Programas.html',
 		controller: 'programaCtrl'
 	})
+	.when('/grafo', {
+		templateUrl: 'views/grafo.html',
+		controller: 'grafoCtrl'
+	})
 	.when('/benjamin/admin', {
 		templateUrl: 'views/administrador.html',
 		controller: 'adminCtrl'

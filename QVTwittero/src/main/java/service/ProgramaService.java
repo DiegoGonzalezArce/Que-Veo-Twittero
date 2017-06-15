@@ -42,6 +42,7 @@ import facade.Programa_KeywordFacade;
 import facade.TweetFacade;
 import facade.Tweet_KeywordFacade;
 import java.util.Iterator;
+import model.Grafo;
 import model.Link;
 import model.Links;
 import model.Node;
@@ -92,6 +93,8 @@ public class ProgramaService {
     public List<Keyword> KPP(@PathParam("id") Integer id) {
         return KeywordPorPrograma(id);
     }
+    
+    
     
     private List<Keyword> KeywordPorPrograma(Integer id) {
         List<Programa_Keyword> x = programaKeywordFacadeEJB.findAll();
@@ -342,6 +345,17 @@ public class ProgramaService {
     public Links links(){
         return decodeLinks();
     }
+    @GET
+    @Path("/neo4jg")
+    @Consumes({"application/xml", "application/json"})
+    public Grafo grafo(){
+        Links liks = decodeLinks();
+        Nodes nods = decodeNodes();
+        Grafo grafito = new Grafo(liks.getLinks(), nods.getNodes());
+        System.out.println("123456");
+        return grafito;    
+    }
+    
     private Nodes decodeNodes(){
         StatementResult result=getNodoNeo4j("Programa");
         List<Node> nodos=new ArrayList<Node>();
