@@ -137,10 +137,24 @@ public class TweetService {
             //tweet.setMenciones(tc.getMencionesbyID(Long.parseLong(d.get("id"))));
             tweet.setAnalisis(sr.addTweetScore(d));
             i++;
-            try {
-                TweetFacadeEJB.create(tweet);
-                entity.add(tweet);
-            } catch (EJBException e) {
+            Tweet found =TweetFacadeEJB.find(tweet.getId_Tweet());
+            try{
+                if(found.getId_Tweet()==tweet.getId_Tweet()){
+                    //System.out.println("ya existe");          
+                }
+                else {
+                    try {
+                        TweetFacadeEJB.create(tweet);
+                        entity.add(tweet);
+                    } catch (EJBException e) {
+                }
+                }
+            }catch (NullPointerException error){
+                try {
+                        TweetFacadeEJB.create(tweet);
+                        entity.add(tweet);
+                } catch (EJBException e) {
+                }
             }
         }
         return entity;
