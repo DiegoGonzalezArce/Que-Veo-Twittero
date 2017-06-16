@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -84,5 +87,19 @@ public class NLPTools {
 			   }
 				}
 			}	
-	}
+    }
+    public List<String> getDate(Timestamp times){
+        String[] timestamp=times.toString().split(" ");
+        List<String> resultado=new ArrayList<String>();
+        String[] date=timestamp[0].split("-");
+        String[] time=timestamp[1].split(":");
+        resultado.add(date[0]);
+        resultado.add(date[1]);
+        resultado.add(date[2]);
+        resultado.add(time[0]);
+        resultado.add(time[1]);
+        resultado.add(time[2]);
+        System.out.println(resultado);
+        return resultado;
+    }
 }

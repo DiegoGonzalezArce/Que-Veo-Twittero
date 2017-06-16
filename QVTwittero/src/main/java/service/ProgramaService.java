@@ -9,6 +9,7 @@
  */
 package service;
 
+import Lucene42.src.cl.qvt.nlp.NLPTools;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
@@ -43,6 +44,7 @@ import facade.TweetFacade;
 import facade.Tweet_KeywordFacade;
 import java.util.Iterator;
 import model.GTorta;
+import model.GTortaElem;
 import model.Grafo;
 import model.Link;
 import model.Links;
@@ -94,7 +96,14 @@ public class ProgramaService {
     public List<Keyword> KPP(@PathParam("id") Integer id) {
         return KeywordPorPrograma(id);
     }
-    
+    @GET
+    @Path("/date/{id}")
+    public String date(@PathParam("id") Integer id) {
+        Tweet tweet=tweetsPrograma(id).get(0);
+        NLPTools tools=new NLPTools();
+        System.out.println(tools.getDate(tweet.getDate()));
+        return tools.getDate(tweet.getDate()).toString();
+    }
     
     
     private List<Keyword> KeywordPorPrograma(Integer id) {
@@ -130,7 +139,7 @@ public class ProgramaService {
 
     @GET
     @Path("/positivo/{id}")
-    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public int pP(@PathParam("id") Integer id) {
         return positivosPrograma(id);
     }
@@ -151,7 +160,7 @@ public class ProgramaService {
 
     @GET
     @Path("/negativo/{id}")
-    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public int nP(@PathParam("id") Integer id) {
         return negativosPrograma(id);
     }
@@ -190,7 +199,7 @@ public class ProgramaService {
 
     @GET
     @Path("/tweetMencionado/{id}")
-    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public Tweet tM(@PathParam("id") Integer id) {
         return tweetMencionado(id);
     }
@@ -228,16 +237,17 @@ public class ProgramaService {
     
     @GET
     @Path("/graficoTorta/{id}")
-    public List<GTorta> grafTorta(@PathParam("id") Integer id){
+    @Produces("application/json")
+    public GTorta grafTorta(@PathParam("id") Integer id){
         Programa programa=programaFacadeEJB.find(id);
-        List<GTorta> resultados=new ArrayList<GTorta>();
-        GTorta temp=new GTorta("Neutrales",(programa.getMenciones()-(programa.getMencionesPositivas()+programa.getMencionesNegativas())));
+        List<GTortaElem> resultados=new ArrayList<GTortaElem>();
+        GTortaElem temp=new GTortaElem("Neutrales",(programa.getMenciones()-(programa.getMencionesPositivas()+programa.getMencionesNegativas())));
         resultados.add(temp);
-        temp=new GTorta("Positivos",programa.getMencionesPositivas());
+        temp=new GTortaElem("Positivos",programa.getMencionesPositivas());
         resultados.add(temp);
-        temp=new GTorta("Negativos",programa.getMencionesNegativas());
+        temp=new GTortaElem("Negativos",programa.getMencionesNegativas());
         resultados.add(temp);
-        return resultados;
+        return new GTorta(resultados);
         
     }
     
@@ -289,6 +299,7 @@ public class ProgramaService {
         return "logrado";
         
     }
+    
     /*
     @GET
     @Path("/neo4jProgramas")
@@ -350,19 +361,19 @@ public class ProgramaService {
     }
     @GET
     @Path("/neo4jnodes")
-    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public Nodes nodes(){
         return decodeNodes();
     }
     @GET
     @Path("/neo4jlinks")
-    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public Links links(){
         return decodeLinks();
     }
     @GET
     @Path("/neo4jg")
-    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public Grafo grafo(){
         Links liks = decodeLinks();
         Nodes nods = decodeNodes();

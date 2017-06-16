@@ -5,33 +5,30 @@
  */
 package model;
 
+import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author yolo
  */
+@XmlRootElement
 public class GTorta {
-    String label;
-    int count;
+    List<GTortaElem> resultados;
 
-    public GTorta(String label, int count) {
-        this.label = label;
-        this.count = count;
+    public GTorta() {
     }
 
-    public String getLabel() {
-        return label;
+    public GTorta(List<GTortaElem> resultados) {
+        this.resultados = resultados;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public List<GTortaElem> getResultados() {
+        return resultados;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+    public void setResultados(List<GTortaElem> resultados) {
+        this.resultados = resultados;
     }
     
 }

@@ -7,6 +7,7 @@ package service;
 
 import twitter.TwitterConnection;
 import Lucene42.src.cl.qvt.main.LuceneServiceBean;
+import Lucene42.src.cl.qvt.nlp.NLPTools;
 import Lucene42.src.cl.qvt.searcher.TweetSearcher;
 import facade.KeywordFacade;
 import facade.TweetFacade;
@@ -68,7 +69,7 @@ public class TweetService {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Tweet find(@PathParam("id") Integer id) {
+    public Tweet find(@PathParam("id") Long id) {
         return TweetFacadeEJB.find(id);
     }
 
