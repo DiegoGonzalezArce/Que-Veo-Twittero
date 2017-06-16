@@ -42,6 +42,7 @@ import facade.Programa_KeywordFacade;
 import facade.TweetFacade;
 import facade.Tweet_KeywordFacade;
 import java.util.Iterator;
+import model.GTorta;
 import model.Grafo;
 import model.Link;
 import model.Links;
@@ -142,7 +143,7 @@ public class ProgramaService {
         }
         for (Tweet tweet : tweets) {
             if (tweet.getAnalisis() > 0) {
-                resultado++;
+                resultado=resultado+tweet.getMenciones();
             }
         }
         return resultado;
@@ -163,7 +164,7 @@ public class ProgramaService {
         }
         for (Tweet tweet : tweets) {
             if (tweet.getAnalisis() < 0) {
-                resultado++;
+                resultado=resultado+tweet.getMenciones();
             }
 
         }
@@ -225,6 +226,20 @@ public class ProgramaService {
         return resultado;
     }
     
+    @GET
+    @Path("/graficoTorta/{id}")
+    public List<GTorta> grafTorta(@PathParam("id") Integer id){
+        Programa programa=programaFacadeEJB.find(id);
+        List<GTorta> resultados=new ArrayList<GTorta>();
+        GTorta temp=new GTorta("Neutrales",(programa.getMenciones()-(programa.getMencionesPositivas()+programa.getMencionesNegativas())));
+        resultados.add(temp);
+        temp=new GTorta("Positivos",programa.getMencionesPositivas());
+        resultados.add(temp);
+        temp=new GTorta("Negativos",programa.getMencionesNegativas());
+        resultados.add(temp);
+        return resultados;
+        
+    }
     
     @GET
     @Path("/mencionesupdate")
