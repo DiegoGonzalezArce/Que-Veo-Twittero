@@ -23,9 +23,9 @@
                                     </div>
                                     
                                 </li>
-                               <li class="span6">
+                               <li class="span6" ng-model="prueba">
                                     <div class="block">
-                                        <d3-programa>
+                                        <d3-programa progra="{{prueba}}">
                                                 <div id="chart"></div>
                                         </d3-programa>
                                     <div class="block">
@@ -38,8 +38,9 @@
                                         <div style="display: inline-block; width: 25%;">
                                             <h5>Menciones Positivas:</h5> <p>{{programa.mencionesPositivas}}</p>
                                         </div>
-                                    </div>    
+                                    </div>  
 
+                                   
                                     </div>
                                     
                                  </li>

@@ -27,9 +27,7 @@ angular.module('mainModule')
 		getTweet($scope.prueba);
 
 		//Aqui deberia transformar para graficos
-
-
-		console.log($scope.programa[0]);
+		
 
 		//var json = JSON.parse($scope.programa);
 

@@ -17,12 +17,12 @@
     shape-rendering: crispEdges;
   }
 
-  #chart {                                                            
+#chart {                                                            
           height: 360px;                                                    
           position: relative;                                               
           width: 360px;                                                     
         }                                                                   
-        .tooltip {                                                          
+.tooltip {                                                          
           background: #aec7e8;                                                 
           box-shadow: 0 0 5px #999999;                                      
           color: #333; 
@@ -37,7 +37,11 @@
           width: 80px;                                                      
           z-index: 10;                                                      
         }                                                                   
-        .legend {
+.legend {
           font-size: 12px;
           font-family: Sans-serif;  
-        }
+}
+
+rect {
+        stroke-width: 2;
+}

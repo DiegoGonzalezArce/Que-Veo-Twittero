@@ -241,19 +241,32 @@ angular.module('mainModule')
 	.directive('d3Programa', ["d3p", function(d3){
 		 return {
             restrict: 'EA',
-            scope:{},
+            scope:{
+            	progra: '@'
+            },
             link: function(scope, element, attrs)
             {
+
+
+
             d3.d3().then(function(d3) {
 	        'use strict';
 	          
-	        var torta = [
-			{"label": "Neutrales", "count": 2040-516 },
-			{"label": "Positivas", "count": 450},
-			{"label": "Negativas", "count": 66}
-			];
+	      
 
-	        
+			scope.$watch('progra', function (newVal) {
+				   
+
+		
+			var urlGr = "http://localhost:8080/QVTwittero/programas/graficoTorta/" + scope.progra;
+			console.log(urlGr);
+		d3.json(urlGr, function(error, dataset) {     
+          dataset.resultados.forEach(function(d){
+
+            d.label = d.label;
+            d.count = + d.count;
+          });
+
 	        var width = 360;
 	        var height = 360;
 	        var radius = Math.min(width, height) / 2;
@@ -292,26 +305,31 @@ angular.module('mainModule')
 	          .attr('class', 'percent');  
 
 	          var path = svg.selectAll('path')
-	            .data(pie(torta))
+	            .data(pie(dataset.resultados))
 	            .enter()
 	            .append('path')
 	            .attr('d', arc)
 	            .attr('fill', function(d, i) {
 	              return color(d.data.label);
 	            });
+                                       
 
 	          //Creo que al matar el json, muere el evento. INTENTAR ARREGLAR
 	          path.on('mouseover', function(d) {                              
-	            var total = d3.sum(torta.map(function(d) {                 
+	            var total = d3.sum(dataset.resultados.map(function(d) {                 
 	              return d.count;                                            
-	            }));                                                         
-	            var percent = Math.round(1000 * d.count / total) / 10;  
-	            tooltip.select('.label').html(d.label);                 
-	            tooltip.select('.count').html('tweets: '+d.count);                 
+	            }));    
+	            //Hasta aca funca            
+	            var percent = Math.round(1000 * d.data.count / total) / 10;
+	              
+	            tooltip.select('.label').html(d.data.label);                 
+	            tooltip.select('.count').html('tweets: '+d.data.count);                 
 	            tooltip.select('.percent').html(percent + '%');              
-	            tooltip.style('display', 'block');                           
-	          });                                                            
+	            tooltip.style('display', 'block');  
 
+                         
+	          });      
+	          console.log("asd");                                                    
 	          path.on('mouseout', function() {                               
 	            tooltip.style('display', 'none');                            
 	          });                                                            
@@ -346,11 +364,17 @@ angular.module('mainModule')
 	            .attr('x', legendRectSize + legendSpacing)
 	            .attr('y', legendRectSize - legendSpacing)
 	            .text(function(d) { return d; });
+	           
 
-	        ;
-			
-	      })(window.d3);
-	}}}]);	
+	        
+	        	})			//JSON
+			});				//watch
+	      })(window.d3);	//Then
+		}					//link
+	}						//Return
+}]);						//Fin	
+
+
 
 angular.module('mainModule')
 	.directive('d3Grafo', ["d3p", function(d3){
