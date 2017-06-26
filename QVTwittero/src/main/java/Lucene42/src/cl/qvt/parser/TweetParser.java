@@ -38,7 +38,7 @@ public class TweetParser {
 			List<String> list = tool.getContent(archivoDat);
 			for (Iterator iter = list.iterator(); iter.hasNext();) {
 				String elem = (String) iter.next();
-                                String str="\\{\"_id\":\\{\"\\$oid\":\"(.*)\"\\},\"id\":\\{\"\\$numberLong\":\"(.*)\"\\},\"tweet\":\"(.*)\",\"username\":\"(.*)\",\"day\":\"(.*)\",\"month\":\"(.*)\",\"anio\":\"(.*)\",\"hour\":\"(.*)\",\"RTcount\":([0-9]*),\"LIKEcount\":([0-9]*),\"Menciones\":([0-9]*)\\}";
+                                String str="\\{\"_id\":\\{\"\\$oid\":\"(.*)\"\\},\"id\":\\{\"\\$numberLong\":\"(.*)\"\\},\"tweet\":\"(.*)\",\"username\":\"(.*)\",\"day\":\"(.*)\",\"month\":\"(.*)\",\"anio\":\"(.*)\",\"hour\":\"(.*)\",\"RTcount\":([0-9]*),\"LIKEcount\":([0-9]*),\"Menciones\":([0-9]*),\"Latitud\":(.*),\"Longitud\":(.*)\\}";
                                 Pattern p = Pattern.compile(str);
                                 Matcher m = p.matcher(elem);
                                 if(m.find()){
