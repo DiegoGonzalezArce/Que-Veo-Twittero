@@ -46,6 +46,10 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: 'views/modificar.html',
 		controller: 'modificarCtrl'
 	})
+	.when('/mapa', {
+		templateUrl: 'views/mapa.html',
+		controller: 'mapaCtrl'
+	})
 	.otherwise({
 		redirectTo: '/home'
 	});

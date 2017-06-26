@@ -19,6 +19,15 @@
         <link rel="stylesheet" href="css/font-awesome-ie7.css">
         <link rel="stylesheet" href="css/styled3.css">
         <link rel="stylesheet" href="css/grafostyle.css">
+        <link rel="stylesheet" href="css/map.css">
+
+        <!--Utilizadad para el mapa -->
+        <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></script>
+        
+
+
 
         
 
@@ -47,7 +56,7 @@
                                         <h3>¿Qué veo <br> Twittero?</h3>
                                     </div>
                                 </li>
-                                <li><a href="#Services">Services</a></li> <!--Services te lleva a la seccion servicios dentro de la misma pagina-->
+                                <li><a href="#mapa">Mapa</a></li> <!--Services te lleva a la seccion servicios dentro de la misma pagina-->
                                 <li><a href="#login" role= "button" data-toggle="modal" >Log in</a></li>
                             </ul>
                         </div><!--/.nav-collapse -->
@@ -105,6 +114,7 @@
 
     <script src="js/app.js"></script>
     <script src="js/d3plot.js"></script>
+    <script src="js/regions.js"></script>
     
     <script src="js/controllers/homeCtrl.js"></script>
     <script src="js/controllers/rankingCtrl.js"></script>
@@ -115,6 +125,7 @@
     <script src="js/controllers/loginCtrl.js"></script>
     <script src="js/controllers/adminCtrl.js"></script>
     <script src="js/controllers/grafoCtrl.js"></script>
+    <script src="js/controllers/mapaCtrl.js"></script>
 
 
     <script src="js/services/categoriaSrv.js"></script>
