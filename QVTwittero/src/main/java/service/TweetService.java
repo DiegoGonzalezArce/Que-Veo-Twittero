@@ -195,7 +195,7 @@ public class TweetService {
         }
         for (Tweet tweet : tweets) {
             long id = tweet.getId_Tweet();
-            if(tweet.getMenciones()==0){//cambiar valor por default
+            if(tweet.getLatitud()==0 && tweet.getLongitud()==0){//cambiar valor por default
                 try {
                     tweet.setLongitud(conexion.getLongbyID(id));
                     tweet.setLatitud(conexion.getLatbyID(id));
