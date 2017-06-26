@@ -185,7 +185,30 @@ public class TweetService {
         }
         return "logrado";
     }
-
+    @GET
+    @Path("/updateGeo")
+    public String geo() throws IOException, ParseException, TwitterException {
+        List<Tweet> tweets = TweetFacadeEJB.findAll();
+        TwitterConnection conexion = new TwitterConnection();
+        if (tweets.isEmpty()) {
+            return "error";
+        }
+        for (Tweet tweet : tweets) {
+            long id = tweet.getId_Tweet();
+            if(tweet.getMenciones()==0){//cambiar valor por default
+                try {
+                    tweet.setLongitud(conexion.getLongbyID(id));
+                    tweet.setLatitud(conexion.getLatbyID(id));
+                    try {
+                        TweetFacadeEJB.edit(tweet);
+                    } catch (EJBException e) {
+                    }
+                } catch (TwitterException te) {
+                }
+            }
+        }
+        return "logrado";
+    }
     @GET
     @Path("/update")
     public String update() throws IOException, ParseException, TwitterException {

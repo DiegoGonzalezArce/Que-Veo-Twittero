@@ -39,6 +39,12 @@ public class Tweet {
 
     @Column(name = "analisis", nullable = false)
     private int analisis;
+    
+    @Column(name = "latitud", nullable = false)
+    private double latitud;
+    
+    @Column(name = "longitud", nullable = false)
+    private double longitud;
 
     public Tweet() {
     }
@@ -85,6 +91,22 @@ public class Tweet {
 
     public int getAnalisis() {
         return analisis;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
     }
 
     public void setAnalisis(int analisis) {

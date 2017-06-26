@@ -48,4 +48,14 @@ public class TwitterConnection {
         int Likecontador = status.getFavoriteCount();
         return RTcontador + Likecontador + 1;
     }
+    public double getLatbyID(long id) throws TwitterException {
+        Status status = this.twitter.showStatus(id);
+        double latitud = status.getGeoLocation().getLatitude();
+        return latitud ;
+    }
+    public double getLongbyID(long id) throws TwitterException {
+        Status status = this.twitter.showStatus(id);
+        double longitud = status.getGeoLocation().getLongitude();
+        return longitud;
+    }
 }
