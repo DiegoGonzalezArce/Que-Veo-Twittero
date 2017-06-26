@@ -165,8 +165,9 @@ public class TwitterStreaming{
                                                                             .append("hour",hora+":"+minuto+":"+segundo)
                                                                             .append("RTcount", status.getRetweetCount())    
 									    .append("LIKEcount", status.getFavoriteCount())
-                                                                            .append("Menciones", status.getRetweetCount() + status.getFavoriteCount());
-                                                                                
+                                                                            .append("Menciones", status.getRetweetCount() + status.getFavoriteCount())
+                                                                            .append("Latitud", status.getGeoLocation().getLatitude())
+                                                                            .append("Longitud", status.getGeoLocation().getLongitude());
                                                                             
 					//Lo inserta en la colleccteion MyTestCollection de la BD test.
 					coll.insertOne(doc);
