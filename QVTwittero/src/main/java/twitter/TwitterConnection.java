@@ -5,7 +5,6 @@
  */
 package twitter;
 
-import twitter4j.*;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -49,23 +48,14 @@ public class TwitterConnection {
         int Likecontador = status.getFavoriteCount();
         return RTcontador + Likecontador + 1;
     }
-
     public double getLatbyID(long id) throws TwitterException {
         Status status = this.twitter.showStatus(id);
-        if (status.getGeoLocation() != null) {
-            double latitud = status.getGeoLocation().getLatitude();
-            return latitud;
-        }
-        return 0;
-
+        double latitud = status.getGeoLocation().getLatitude();
+        return latitud ;
     }
-
     public double getLongbyID(long id) throws TwitterException {
         Status status = this.twitter.showStatus(id);
-        if (status.getGeoLocation() != null) {
-            double longitud = status.getGeoLocation().getLongitude();
-            return longitud;
-        }
-        return 0;
+        double longitud = status.getGeoLocation().getLongitude();
+        return longitud;
     }
 }

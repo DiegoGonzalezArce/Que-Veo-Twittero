@@ -195,16 +195,19 @@ public class TweetService {
         }
         for (Tweet tweet : tweets) {
             long id = tweet.getId_Tweet();
-            if(tweet.getLatitud()==0 && tweet.getLongitud()==0){//cambiar valor por default
+            try{
                 try {
                     tweet.setLongitud(conexion.getLongbyID(id));
                     tweet.setLatitud(conexion.getLatbyID(id));
+                    System.out.println(tweet.getLatitud()+"\t"+tweet.getLongitud());
                     try {
+                        System.out.println(tweet);
                         TweetFacadeEJB.edit(tweet);
                     } catch (EJBException e) {
                     }
                 } catch (TwitterException te) {
                 }
+            } catch(NullPointerException ne){
             }
         }
         return "logrado";
