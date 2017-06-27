@@ -40,6 +40,7 @@ import facade.KeywordFacade;
 import model.Keyword;
 
 import facade.Programa_KeywordFacade;
+import facade.RegionFacade;
 import facade.TweetFacade;
 import facade.Tweet_KeywordFacade;
 import java.util.Iterator;
@@ -60,6 +61,9 @@ public class ProgramaService {
     @EJB
     ProgramaFacade programaFacadeEJB;
 
+    @EJB
+    RegionFacade regionFacadeEJB;
+    
     @EJB
     CanalFacade canalFacadeEJB;
 
@@ -299,7 +303,63 @@ public class ProgramaService {
         return "logrado";
         
     }
-    
+    @GET
+    @Path("/geo/{id}")
+    public List<String> geoloc(@PathParam("id") Integer id){
+        return geoRanking(id);
+        
+    }
+    private int geoMencionesPrograma(Integer idPrograma,Integer idRegion){
+        int resultado =0;
+        List<Tweet> tweets = tweetsPrograma(idPrograma);
+        if(tweets.isEmpty()){
+            return resultado;
+        }
+        
+        for(Tweet tweet : tweets){
+            String region=regionFacadeEJB.findRegion(tweet.getLongitud(), tweet.getLatitud());
+            if(region.equalsIgnoreCase(""+idRegion)){
+                resultado=resultado+(tweet.getMenciones());
+            }
+        }
+        return resultado;
+        
+    }
+    private List<String> geoRanking(Integer idRegion){
+        List<String> resultado=new ArrayList<>();
+        List<Programa> orden=new ArrayList<>();
+        List<Programa> programs = programaFacadeEJB.findAll();
+        if(programs.isEmpty()){
+            return resultado;
+        }
+        for(Programa programa : programs){
+           int mencion=geoMencionesPrograma(programa.getProgramaId(),idRegion);
+           if(orden.isEmpty()){
+               orden.add(programa);
+           }
+           else{
+               boolean insertado=false;
+               for(int i=orden.size()-1;i>=0;i--){
+                   if(geoMencionesPrograma(orden.get(i).getProgramaId(),idRegion)>mencion){
+                       if(i==orden.size()-1)orden.add(programa);
+                       else orden.add(i,programa);
+                       insertado=true;
+                       break;
+                   }
+               }
+               if(!insertado){
+                   orden.add(0,programa);
+               }
+           }
+           
+        }
+        for(Programa ordenado : orden){
+            String nombre=ordenado.getNombre();
+            resultado.add(nombre);
+        }
+        return resultado;
+        
+    }
     /*
     @GET
     @Path("/neo4jProgramas")
