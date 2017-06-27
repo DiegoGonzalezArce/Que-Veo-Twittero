@@ -17,4 +17,8 @@ angular.module('mainModule')
 		this.getTweet = function(id){
 			return $http.get('http://localhost:8080/QVTwittero/programas/tweetMencionado/'+id);
 		}
+
+		this.getGeo = function(id){
+			return $http.get('http://localhost:8080/QVTwittero/programas/geo/'+id);
+		}
 	});
