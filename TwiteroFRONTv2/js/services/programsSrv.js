@@ -20,5 +20,5 @@ angular.module('mainModule')
 
 		this.getGeo = function(id){
 			return $http.get('http://localhost:8080/QVTwittero/programas/geo/'+id);
-		}
+		};
 	});
