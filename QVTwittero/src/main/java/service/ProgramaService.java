@@ -40,6 +40,7 @@ import facade.KeywordFacade;
 import model.Keyword;
 
 import facade.Programa_KeywordFacade;
+import facade.Programa_RegionFacade;
 import facade.RegionFacade;
 import facade.TweetFacade;
 import facade.Tweet_KeywordFacade;
@@ -52,6 +53,7 @@ import model.Links;
 import model.Node;
 import model.Nodes;
 import model.Programa_Keyword;
+import model.Programa_Region;
 import model.Tweet;
 import model.Tweet_Keyword;
 
@@ -63,6 +65,9 @@ public class ProgramaService {
 
     @EJB
     RegionFacade regionFacadeEJB;
+    
+    @EJB
+    Programa_RegionFacade Programa_RegionFacadeEJB;
     
     @EJB
     CanalFacade canalFacadeEJB;
@@ -305,9 +310,20 @@ public class ProgramaService {
     }
     @GET
     @Path("/geo/{id}")
-    public List<String> geoloc(@PathParam("id") Integer id){
-        return geoRanking(id);
-        
+    public List<String> geoLoc(@PathParam("id") Integer id){
+        List<Programa_Region> programas=Programa_RegionFacadeEJB.Order(id);
+        List<String> resultado=new ArrayList<>();
+        for(Programa_Region programa : programas){
+            resultado.add(programaFacadeEJB.find(programa.getPrograma_id3()).getNombre());
+        }
+        return resultado;
+      
+    }
+    @GET
+    @Path("/geo/{id}/{id2}")
+    public int geoMen(@PathParam("id") Integer id,@PathParam("id2") Integer id2){
+        return geoMencionesPrograma(id2,id);
+      
     }
     private int geoMencionesPrograma(Integer idPrograma,Integer idRegion){
         int resultado =0;
@@ -318,13 +334,57 @@ public class ProgramaService {
         
         for(Tweet tweet : tweets){
             String region=regionFacadeEJB.findRegion(tweet.getLongitud(), tweet.getLatitud());
-            if(region.equalsIgnoreCase(""+idRegion)){
+            if(region.indexOf(""+idRegion)!=-1){
                 resultado=resultado+(tweet.getMenciones());
             }
         }
         return resultado;
         
     }
+    @GET
+    @Path("/geo/mencionesCreate")
+    public String geoMenCreate(){
+        List<Programa> programs = programaFacadeEJB.findAll();
+        int i=0;
+        for(Programa program : programs){
+            for(int j=1;j<16;j++){
+                i++;
+                Programa_Region programa_region=new Programa_Region(i,program.getProgramaId(),j);
+                Programa_RegionFacadeEJB.create(programa_region);
+            }
+        }
+        return "logrado";
+      
+    }
+    
+    @GET
+    @Path("/geo/mencionesUpdate")
+    public String geoMenAll(){
+        List<Programa_Region> programa_regions = Programa_RegionFacadeEJB.findAll();
+        for(Programa_Region programa_region : programa_regions){
+            programa_region.setMenciones(geoMencionesPrograma(programa_region.getPrograma_id3(),programa_region.getRegion_id()));
+            Programa_RegionFacadeEJB.edit(programa_region);
+        }
+        return "logrado";
+      
+    }
+    private int geoMenciones(Integer idPrograma,Integer idRegion){
+        int resultado =0;
+        List<Tweet> tweets = tweetsPrograma(idPrograma);
+        if(tweets.isEmpty()){
+            return resultado;
+        }
+        
+        for(Tweet tweet : tweets){
+            String region=regionFacadeEJB.findRegion(tweet.getLongitud(), tweet.getLatitud());
+            if(region.indexOf(""+idRegion)!=-1){
+                resultado=resultado+(tweet.getMenciones());
+            }
+        }
+        return resultado;
+        
+    }
+    
     private List<String> geoRanking(Integer idRegion){
         List<String> resultado=new ArrayList<>();
         List<Programa> orden=new ArrayList<>();
